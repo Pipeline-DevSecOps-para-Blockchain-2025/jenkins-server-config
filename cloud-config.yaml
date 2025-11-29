@@ -15,6 +15,7 @@ users:
 packages:
   - kitty-terminfo
   - podman
+  - crun-krun
   - passt
 
 write_files:
@@ -39,6 +40,13 @@ write_files:
     content: |
       [engine]
       image_parallel_copies = 12
+
+  - path: /etc/containers/containers.conf.d/50-runtime.conf
+    owner: root:root
+    permissions: '0o644'
+    content: |
+      [engine]
+      runtime = "krun"
 
   - path: /etc/ssh/sshd_config.d/20-authentication.conf
     owner: root:root
