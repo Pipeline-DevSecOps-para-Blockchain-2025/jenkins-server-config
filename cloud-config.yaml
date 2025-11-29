@@ -35,6 +35,8 @@ write_files:
     owner: root:root
     permissions: '0444'
     content: |
+      limit_req_zone $binary_remote_addr zone=jenkins_limit:10m rate=10r/s;
+
       server {
         listen 80;
         listen [::]:80;
@@ -43,6 +45,8 @@ write_files:
 
         # Proxy everything to Jenkins on localhost:8080
         location / {
+          limit_req zone=jenkins_limit burst=20 nodelay;
+
           proxy_pass         http://127.0.0.1:8080;
           proxy_set_header   Host \$host;
           proxy_set_header   X-Real-IP \$remote_addr;
@@ -120,4 +124,5 @@ write_files:
 
 runcmd:
   - [loginctl, enable-linger, runner]
+  - [ln, -s, /etc/nginx/sites-available/jenkins.conf, /etc/nginx/sites-enabled/jenkins.conf]
   - [systemctl, enable, --now, nginx]
