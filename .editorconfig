@@ -15,6 +15,18 @@ indent_brace_style = K&R
 curly_bracket_next_line = false
 spaces_around_operators = true
 quote_type = single
+# For https://github.com/mvdan/sh
+switch_case_indent = true
+function_next_line = false
+binary_next_line = true
+space_redirects = true
+
+# Scripts tend to use 2 spaces
+[[shell]]
+indent_size = 2
+
+[*.{sh,bash,zsh}]
+indent_size = 2
 
 # Most config files
 [*.{md,toml,json}]
