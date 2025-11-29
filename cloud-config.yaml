@@ -1,1 +1,7 @@
+## template: jinja
 #cloud-config
+
+hostname: '{{ v1.local_hostname }}'
+
+packages:
+  - kitty-terminfo
