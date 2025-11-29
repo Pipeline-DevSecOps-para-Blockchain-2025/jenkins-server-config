@@ -2,13 +2,34 @@
 #cloud-config
 
 hostname: '{{ v1.local_hostname }}'
+ssh_pwauth: false # authorized keys only
 
 users:
   - name: runner
     shell: /bin/bash
+    ssh_authorized_keys: # prefer `-sk` (FIDO/U2F) keys
+      - sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAINczWuNAtwE1eBt9quk1HmbzGdLlGDb7BBL6SgUFay8QAAAABHNzaDo= marmis@marmis-arch
+      - sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAILBqGX/KZaYWuWIHBR4CQu7rgnfKYbr57fPnerlCA1FyAAAABHNzaDo= marmis@marmis-samsung
+      - sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAID0FKhzEMNixWGnA2fZy7oP9yf1vbnFhTc+0jg6bbxHhAAAABHNzaDo= marmis@dev-sec-ops-tiago
 
 packages:
   - kitty-terminfo
+
+write_files:
+  - path: /etc/ssh/sshd_config.d/20-authentication.conf
+    owner: root:root
+    permissions: '0644'
+    content: |
+      # Deny root access
+      PermitRootLogin no
+
+      # Enable public key
+      AuthenticationMethods publickey
+      PubkeyAuthentication yes
+
+      # Disable password
+      PasswordAuthentication no
+      KbdInteractiveAuthentication no
 
 runcmd:
   - [loginctl, enable-linger, runner]
