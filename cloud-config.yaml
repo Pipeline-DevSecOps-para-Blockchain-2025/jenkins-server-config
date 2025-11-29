@@ -14,8 +14,32 @@ users:
 
 packages:
   - kitty-terminfo
+  - podman
+  - passt
 
 write_files:
+  - path: /etc/containers/containers.conf.d/10-compose-warnings.conf
+    owner: root:root
+    permissions: '0o644'
+    content: |
+      [engine]
+      compose_warning_logs = true
+
+  - path: /etc/containers/containers.conf.d/30-compression.conf
+    owner: root:root
+    permissions: '0o644'
+    content: |
+      [engine]
+      compression_format = "zstd"
+      compression_level = 5
+
+  - path: /etc/containers/containers.conf.d/31-downloads.conf
+    owner: root:root
+    permissions: '0o644'
+    content: |
+      [engine]
+      image_parallel_copies = 12
+
   - path: /etc/ssh/sshd_config.d/20-authentication.conf
     owner: root:root
     permissions: '0o644'
