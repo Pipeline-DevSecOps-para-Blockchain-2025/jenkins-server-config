@@ -21,6 +21,11 @@ packages:
   - crun-krun
   - passt
 
+resolv_conf:
+  options:
+    edns0: true
+    trust-ad: true
+
 write_files:
   - path: /etc/containers/containers.conf.d/10-compose-warnings.conf
     owner: root:root
@@ -50,6 +55,13 @@ write_files:
     content: |
       [engine]
       runtime = "krun"
+
+  - path: /etc/containers/containers.conf.d/51-dns-options.conf
+    owner: root:root
+    permissions: '0o644'
+    content: |
+      [containers]
+      dns_options = ["edns0", "trust-ad"]
 
   - path: /etc/ssh/sshd_config.d/20-authentication.conf
     owner: root:root
