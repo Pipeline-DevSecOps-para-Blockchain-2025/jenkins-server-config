@@ -29,14 +29,14 @@ resolv_conf:
 write_files:
   - path: /etc/containers/containers.conf.d/10-compose-warnings.conf
     owner: root:root
-    permissions: '0o644'
+    permissions: '0644'
     content: |
       [engine]
       compose_warning_logs = true
 
   - path: /etc/containers/containers.conf.d/30-compression.conf
     owner: root:root
-    permissions: '0o644'
+    permissions: '0644'
     content: |
       [engine]
       compression_format = "zstd"
@@ -44,28 +44,28 @@ write_files:
 
   - path: /etc/containers/containers.conf.d/31-downloads.conf
     owner: root:root
-    permissions: '0o644'
+    permissions: '0644'
     content: |
       [engine]
       image_parallel_copies = 12
 
   - path: /etc/containers/containers.conf.d/50-runtime.conf
     owner: root:root
-    permissions: '0o644'
+    permissions: '0644'
     content: |
       [engine]
       runtime = "krun"
 
   - path: /etc/containers/containers.conf.d/51-dns-options.conf
     owner: root:root
-    permissions: '0o644'
+    permissions: '0644'
     content: |
       [containers]
       dns_options = ["edns0", "trust-ad"]
 
   - path: /etc/ssh/sshd_config.d/20-authentication.conf
     owner: root:root
-    permissions: '0o644'
+    permissions: '0440'
     content: |
       # Deny root access
       PermitRootLogin no
@@ -80,7 +80,7 @@ write_files:
 
   - path: /etc/ssh/sshd_config.d/50-algorithms.conf
     owner: root:root
-    permissions: '0o644'
+    permissions: '0440'
     content: |
       # Recommended
       KexAlgorithms sntrup761x25519-sha512,sntrup761x25519-sha512@openssh.com,mlkem768x25519-sha256,curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group18-sha512,diffie-hellman-group16-sha512,diffie-hellman-group-exchange-sha256
