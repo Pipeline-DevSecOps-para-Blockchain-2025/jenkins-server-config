@@ -3,5 +3,12 @@
 
 hostname: '{{ v1.local_hostname }}'
 
+users:
+  - name: runner
+    shell: /bin/bash
+
 packages:
   - kitty-terminfo
+
+runcmd:
+  - [loginctl, enable-linger, runner]
