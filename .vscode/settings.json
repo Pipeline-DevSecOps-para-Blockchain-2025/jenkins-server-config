@@ -4,4 +4,6 @@
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
+  "yaml.format.printWidth": 120,
+  "yaml.format.singleQuote": true,
 }

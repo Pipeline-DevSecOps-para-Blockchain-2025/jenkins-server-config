@@ -1,6 +1,7 @@
 {
   "recommendations": [
     "EditorConfig.EditorConfig",
+    "redhat.vscode-yaml",
     "timonwong.shellcheck",
   ]
 }

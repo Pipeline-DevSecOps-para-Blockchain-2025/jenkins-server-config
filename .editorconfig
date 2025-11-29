@@ -32,3 +32,8 @@ indent_size = 2
 [*.{md,toml,json}]
 indent_size = 2
 quote_type = double
+
+# Keep single quotes for YAML
+[*.{yml,yaml,clang*}]
+indent_size = 2
+quote_type = single
