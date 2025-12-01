@@ -20,6 +20,7 @@ package_update: true
 package_upgrade: true
 packages:
   - kitty-terminfo
+  - firewalld
   - nginx
   - certbot
   - python3-certbot-nginx
@@ -127,6 +128,10 @@ write_files:
       Ciphers -chacha20-poly1305@openssh.com
 
 runcmd:
+  - [systemctl, enable, --now, firewalld]
+  - [firewall-cmd, --permanent, --add-service=http]
+  - [firewall-cmd, --permanent, --add-service=https]
+  - [firewall-cmd, --reload]
   - [loginctl, enable-linger, runner]
   - [systemctl, enable, --now, nginx]
   - |
