@@ -1,2 +1,2 @@
 local-hostname: jenkins-server-example
-staging: true
+notls: true
