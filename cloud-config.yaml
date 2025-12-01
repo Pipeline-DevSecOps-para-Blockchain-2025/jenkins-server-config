@@ -33,7 +33,7 @@ resolv_conf:
     trust-ad: true
 
 write_files:
-  - path: /etc/nginx/sites-available/jenkins.conf
+  - path: /etc/nginx/conf.d/jenkins.conf
     owner: nginx:nginx
     permissions: '0444'
     content: |
@@ -144,8 +144,7 @@ write_files:
 
 runcmd:
   - [loginctl, enable-linger, runner]
-  - [ln, -s, /etc/nginx/sites-available/jenkins.conf, /etc/nginx/sites-enabled/jenkins.conf]
   - [systemctl, enable, --now, nginx]
-  - |
-    certbot certonly --nginx {% if staging %}--staging{% endif %} -d '{{ domain }}' -m tiagodepalves@gmail.com --agree-tos -n]
+  - certbot certonly --nginx {%- if ds and ds.meta_data and ds.meta_data.staging %} --staging {% endif -%}
+      -d '{{ domain }}' -m tiagodepalves@gmail.com --agree-tos -n
   - [systemctl, reload, nginx]

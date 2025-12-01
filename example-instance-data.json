@@ -1,5 +1,9 @@
 {
-  "staging": true,
+  "ds": {
+    "meta_data": {
+      "staging": true
+    }
+  },
   "v1": {
     "local_hostname": "jenkins-server-example"
   }
