@@ -146,5 +146,6 @@ runcmd:
   - [loginctl, enable-linger, runner]
   - [ln, -s, /etc/nginx/sites-available/jenkins.conf, /etc/nginx/sites-enabled/jenkins.conf]
   - [systemctl, enable, --now, nginx]
-  - [certbot, certonly, --nginx, -d, '{{ domain }}', -m, tiagodepalves@gmail.com, --agree-tos, -n]
+  - |
+    certbot certonly --nginx {% if staging %}--staging{% endif %} -d '{{ domain }}' -m tiagodepalves@gmail.com --agree-tos -n]
   - [systemctl, reload, nginx]

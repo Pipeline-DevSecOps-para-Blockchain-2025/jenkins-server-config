@@ -1,0 +1,2 @@
+local-hostname: jenkins-server-example
+staging: true
