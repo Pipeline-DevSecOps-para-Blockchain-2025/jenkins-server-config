@@ -1,6 +1,11 @@
 ## template: jinja
 #cloud-config
 
+# see https://wiki.archlinux.org/title/Arch_Linux_on_a_VPS#Hetzner_Cloud
+# and https://community.hetzner.com/tutorials/basic-cloud-config
+vendor_data:
+  enabled: false
+
 hostname: '{{ v1.local_hostname }}'
 ssh_pwauth: false # authorized keys only
 
