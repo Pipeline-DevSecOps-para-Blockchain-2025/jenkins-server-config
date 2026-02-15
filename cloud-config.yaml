@@ -24,14 +24,19 @@ package_reboot_if_required: true
 package_update: true
 package_upgrade: true
 packages:
-  - kitty-terminfo
+  # server networking:
   - firewalld
   - nginx
   - certbot
   - python3-certbot-nginx
+  # local services:
   - podman
   - crun-krun
   - passt
+  # interactive tools:
+  - bat
+  - kitty-terminfo
+  - nano
 
 resolv_conf:
   options:
@@ -39,6 +44,13 @@ resolv_conf:
     trust-ad: true
 
 write_files:
+  - path: /etc/dnf/dnf.conf
+    owner: root:root
+    permissions: '0644'
+    content: |
+      [main]
+      install_weak_deps = no
+
   - path: /etc/nginx/conf.d/jenkins.conf
     owner: root:root
     permissions: '0644'
