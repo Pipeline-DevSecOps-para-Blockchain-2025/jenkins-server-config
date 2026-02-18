@@ -24,16 +24,16 @@ package_reboot_if_required: true
 package_update: true
 package_upgrade: true
 packages:
-  # server networking:
+  # Server networking:
   - firewalld
   - nginx
   - certbot
   - python3-certbot-nginx
-  # local services:
+  # Local services:
   - podman
   - crun-krun
   - passt
-  # interactive tools:
+  # Interactive tools:
   - bat
   - kitty-terminfo
   - nano
@@ -77,42 +77,6 @@ write_files:
         }
       }
 
-  - path: /etc/containers/containers.conf.d/10-compose-warnings.conf
-    owner: root:root
-    permissions: '0644'
-    content: |
-      [engine]
-      compose_warning_logs = true
-
-  - path: /etc/containers/containers.conf.d/30-compression.conf
-    owner: root:root
-    permissions: '0644'
-    content: |
-      [engine]
-      compression_format = "zstd"
-      compression_level = 5
-
-  - path: /etc/containers/containers.conf.d/31-downloads.conf
-    owner: root:root
-    permissions: '0644'
-    content: |
-      [engine]
-      image_parallel_copies = 12
-
-  - path: /etc/containers/containers.conf.d/50-runtime.conf
-    owner: root:root
-    permissions: '0644'
-    content: |
-      [engine]
-      runtime = "krun"
-
-  - path: /etc/containers/containers.conf.d/51-dns-options.conf
-    owner: root:root
-    permissions: '0644'
-    content: |
-      [containers]
-      dns_options = ["edns0", "trust-ad"]
-
   - path: /etc/ssh/sshd_config.d/20-authentication.conf
     owner: root:root
     permissions: '0440'
@@ -143,6 +107,21 @@ write_files:
       HostKeyAlgorithms -ecdsa-sha2-nistp*,sk-ecdsa-sha2-nistp*
       MACs -hmac-sha1*,hmac-sha2-256,hmac-sha2-512,umac-64*,umac-128@openssh.com
       Ciphers -chacha20-poly1305@openssh.com
+
+  - path: /etc/containers/containers.conf.d/99-custom.conf
+    owner: root:root
+    permissions: '0644'
+    content: |
+      [containers]
+      log_driver = "journald"
+      log_tag = "container/{% raw %}{{.Name}}{% endraw %}"
+      dns_options = ["edns0", "trust-ad"]
+
+      [engine]
+      image_parallel_copies = 12
+      compression_format = "zstd"
+      compression_level = 5
+      compose_warning_logs = true
 
 runcmd:
   - [systemctl, enable, --now, firewalld]
