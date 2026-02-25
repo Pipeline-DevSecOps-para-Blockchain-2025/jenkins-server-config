@@ -12,7 +12,7 @@ ssh_pwauth: false # authorized keys only
 users:
   - name: runner
     groups: [wheel]
-    shell: /bin/bash
+    shell: /usr/bin/bash
     lock_passwd: false # allow password locally
     passwd: $y$jFT$gfbd6pgR7SkbmwBxM1pIp0$8AJO9OAl0b3dNLMg5HJcNOzkWCYcVezsBDkPMr3Zkm6
     ssh_authorized_keys: # prefer `-sk` (FIDO/U2F) keys
@@ -157,17 +157,18 @@ write_files:
 
 runcmd:
   - [systemctl, enable, --now, dnf-automatic.timer]
-  - [systemctl, enable, --now, firewalld]
+  - [systemctl, enable, --now, firewalld.service]
   - [firewall-cmd, --permanent, --add-service=http]
   - [firewall-cmd, --permanent, --add-service=https]
   - [firewall-cmd, --reload]
   - [loginctl, enable-linger, runner]
-  - [systemctl, enable, --now, nginx]
+  - [systemctl, enable, --now, nginx.service]
   - |
     {% if ds and ds.meta_data and ds.meta_data.notls -%}
     echo 'TLS disabled'
     {%- else -%}
     certbot run --nginx -d '{{ domain }}' --redirect --hsts --staple-ocsp -m tiagodepalves@gmail.com --agree-tos -n
+    systemctl enable --now certbot-renew.timer
     {%- endif %}
     # identation guard
-  - [systemctl, reload, nginx]
+  - [systemctl, reload, nginx.service]
