@@ -66,6 +66,7 @@ write_files:
       upgrade_type = default
       download_updates = yes
       apply_updates = yes
+      reboot = never
 
   - path: /etc/nginx/conf.d/jenkins.conf
     owner: root:root
@@ -134,6 +135,7 @@ write_files:
       dns_options = ["edns0", "trust-ad"]
 
       [engine]
+      runtime = "krun"
       image_parallel_copies = 12
       compression_format = "zstd"
       compression_level = 5
