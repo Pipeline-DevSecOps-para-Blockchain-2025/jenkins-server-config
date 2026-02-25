@@ -55,6 +55,7 @@ write_files:
     content: |
       [main]
       install_weak_deps = no
+      excludepkgs = qemu-user*
 
   - path: /etc/nginx/conf.d/jenkins.conf
     owner: root:root
