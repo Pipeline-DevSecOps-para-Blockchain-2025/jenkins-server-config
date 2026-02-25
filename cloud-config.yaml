@@ -24,6 +24,7 @@ package_reboot_if_required: true
 package_update: true
 package_upgrade: true
 packages:
+  - dnf-automatic
   # Server networking:
   - firewalld
   - nginx
@@ -56,6 +57,15 @@ write_files:
       [main]
       install_weak_deps = no
       excludepkgs = qemu-user*
+
+  - path: /etc/dnf/automatic.conf
+    owner: root:root
+    permissions: '0644'
+    content: |
+      [commands]
+      upgrade_type = default
+      download_updates = yes
+      apply_updates = yes
 
   - path: /etc/nginx/conf.d/jenkins.conf
     owner: root:root
@@ -146,6 +156,7 @@ write_files:
       fi
 
 runcmd:
+  - [systemctl, enable, --now, dnf-automatic.timer]
   - [systemctl, enable, --now, firewalld]
   - [firewall-cmd, --permanent, --add-service=http]
   - [firewall-cmd, --permanent, --add-service=https]
