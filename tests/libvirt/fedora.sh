@@ -27,14 +27,20 @@ if ! virsh net-list --name | grep -qFx testing; then
   virsh net-start --network testing
 fi
 
-# see storage/fedora.xml
+# see storage/fedora-base.xml
 SOURCE='https://edgeuno-bog2.mm.fcix.net/fedora/linux/releases/43/Cloud/x86_64/images/Fedora-Cloud-Base-Generic-43-1.6.x86_64.qcow2'
-if ! virsh vol-key --pool testing --vol fedora.qcow2 > /dev/null 2>&1; then
-  virsh vol-create --pool testing storage/fedora.xml --validate
+if ! virsh vol-key --pool testing --vol fedora-base.qcow2 > /dev/null 2>&1; then
+  virsh vol-create --pool testing storage/fedora-base.xml --validate
   IMAGE="$(mktemp --tmpdir 'fedora-XXXXXXXXXX.qcow2')"
   curl -fL "${SOURCE}" -o "${IMAGE}"
-  virsh vol-upload --pool testing --vol fedora.qcow2 "${IMAGE}"
+  virsh vol-upload --pool testing --vol fedora-base.qcow2 "${IMAGE}"
 fi
+
+# see storage/fedora.xml
+if virsh vol-key --pool testing --vol fedora.qcow2 > /dev/null 2>&1; then
+  virsh vol-delete --pool testing --vol fedora.qcow2
+fi
+virsh vol-create --pool testing storage/fedora.xml --validate
 
 # see storage/fedora-seed.xml
 if ! virsh vol-key --pool testing --vol fedora-seed.img > /dev/null 2>&1; then
@@ -47,8 +53,4 @@ cloud-localds "${SEED}" ../../cloud-config.yaml ../meta-data.yaml
 virsh vol-upload --pool testing --vol fedora-seed.img "${SEED}"
 
 # see qemu/fedora.xml
-if ! virsh list --name --all | grep -qFx fedora; then
-  virsh define qemu/fedora.xml --validate
-fi
-
-virsh start --domain fedora --validate --console
+virsh create qemu/fedora.xml --validate --autodestroy --console

@@ -1,5 +1,5 @@
 <?xml-model href="/usr/share/libvirt/schemas/domain.rng"?>
-<!-- virsh define local/libvirt/qemu/fedora.xml -->
+<!-- virsh create local/libvirt/qemu/fedora.xml -->
 <domain type='kvm'>
   <title>Fedora Cloud</title>
   <name>fedora</name>
@@ -68,11 +68,12 @@
       <target dev='vda' bus='virtio' />
       <boot order='1' />
     </disk>
-    <disk type='volume' device='disk' model='virtio-non-transitional'>
+    <disk type='volume' device='cdrom'>
       <driver name='qemu' type='raw' />
       <!-- cloud-localds seed.img user-data meta-data -->
       <source pool='testing' volume='fedora-seed.img' />
-      <target dev='vdb' bus='virtio' />
+      <target dev='sda' bus='sata' />
+      <readonly />
     </disk>
     <interface type='network'>
       <source network='testing' />
