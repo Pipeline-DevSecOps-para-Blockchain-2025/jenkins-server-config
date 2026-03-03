@@ -1,0 +1,22 @@
+<?xml-model href="/usr/share/libvirt/schemas/network.rng"?>
+<!--
+virsh net-define local/libvirt/network/testing.xml
+virsh net-autostart testing
+virsh net-start testing
+-->
+<network>
+  <name>testing</name>
+  <forward mode='nat'>
+    <nat ipv6='yes'>
+      <port start='1024' end='65535' />
+    </nat>
+  </forward>
+  <bridge name='virbr88' stp='on' delay='0' />
+  <domain name='testnet' localOnly='yes' />
+  <ip address='192.168.88.1' netmask='255.255.255.0'>
+    <dhcp>
+      <range start='192.168.88.2' end='192.168.88.254' />
+    </dhcp>
+  </ip>
+  <ip family='ipv6' address='fd00:192:168:88::1' prefix='64' />
+</network>

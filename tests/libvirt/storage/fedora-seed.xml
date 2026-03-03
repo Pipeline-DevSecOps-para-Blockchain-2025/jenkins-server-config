@@ -1,0 +1,17 @@
+<?xml-model href="/usr/share/libvirt/schemas/storagevol.rng"?>
+<!--
+```sh
+virsh pool-define local/libvirt/storage/testing.pool.xml
+virsh vol-define testing local/libvirt/storage/fedora-seed.xml
+cloud-localds seed.img user-data meta-data
+virsh vol-upload /var/lib/libvirt/testing/fedora-seed.img seed.img
+```
+-->
+<volume type='file'>
+  <name>fedora-seed.img</name>
+  <capacity unit='MiB'>100</capacity>
+  <allocation>0</allocation>
+  <target>
+    <format type='raw' />
+  </target>
+</volume>

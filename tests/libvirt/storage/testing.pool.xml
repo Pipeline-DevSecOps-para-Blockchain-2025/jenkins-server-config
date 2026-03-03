@@ -1,0 +1,13 @@
+<?xml-model href="/usr/share/libvirt/schemas/storagepool.rng"?>
+<!--
+virsh pool-define local/libvirt/storage/testing.pool.xml
+virsh pool-build testing
+virsh pool-autostart testing
+virsh pool-start testing
+-->
+<pool type='dir'>
+  <name>testing</name>
+  <target>
+    <path>/var/lib/libvirt/testing</path>
+  </target>
+</pool>

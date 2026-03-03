@@ -1,0 +1,101 @@
+<?xml-model href="/usr/share/libvirt/schemas/domain.rng"?>
+<!-- virsh define local/libvirt/qemu/fedora.xml -->
+<domain type='kvm'>
+  <title>Fedora Cloud</title>
+  <name>fedora</name>
+  <metadata>
+    <libosinfo:libosinfo xmlns:libosinfo='http://libosinfo.org/xmlns/libvirt/domain/1.0'>
+      <libosinfo:os id='http://fedoraproject.org/fedora/43' />
+    </libosinfo:libosinfo>
+  </metadata>
+  <os firmware='efi'>
+    <type arch='x86_64' machine='q35'>hvm</type>
+    <firmware>
+      <!-- See /usr/share/qemu/firmware/50-edk2-ovmf-x86_64-secure-4m.json -->
+      <feature enabled='no' name='enrolled-keys' />
+      <feature enabled='yes' name='secure-boot' />
+    </firmware>
+    <bios useserial='yes' />
+  </os>
+  <features>
+    <acpi />
+    <apic />
+    <vmport state='off' />
+    <ioapic driver='kvm' />
+    <smm state='on' />
+    <kvm>
+      <poll-control state='on' />
+      <hint-dedicated state='on' />
+    </kvm>
+  </features>
+  <pm>
+    <suspend-to-mem enabled='no' />
+    <suspend-to-disk enabled='no' />
+  </pm>
+  <vcpu placement='static' cpuset='0-3'>4</vcpu>
+  <cpu mode='host-passthrough' check='full' migratable='off'>
+    <topology sockets='1' dies='1' clusters='1' cores='4' threads='1' />
+  </cpu>
+  <iothreads>1</iothreads>
+  <cputune>
+    <vcpupin vcpu='0' cpuset='0' />
+    <vcpupin vcpu='1' cpuset='1' />
+    <vcpupin vcpu='2' cpuset='2' />
+    <vcpupin vcpu='3' cpuset='3' />
+    <emulatorpin cpuset='4' />
+    <iothreadpin iothread='1' cpuset='5' />
+  </cputune>
+  <memory unit='GiB'>4</memory>
+  <currentMemory unit='GiB'>4</currentMemory>
+  <memoryBacking>
+    <hugepages />
+    <allocation mode='immediate' />
+    <access mode='shared' />
+  </memoryBacking>
+  <clock offset='utc'>
+    <timer name='kvmclock' present='yes' />
+    <timer name='tsc' present='yes' mode='native' />
+    <timer name='rtc' present='yes' tickpolicy='catchup' />
+    <timer name='pit' present='yes' tickpolicy='delay' />
+    <timer name='hpet' present='no' />
+  </clock>
+  <devices>
+    <emulator>/usr/bin/qemu-system-x86_64</emulator>
+    <disk type='volume' device='disk' model='virtio-non-transitional'>
+      <driver name='qemu' type='qcow2' discard='unmap' io='io_uring' iothread='1' packed='on' queues='4' />
+      <!-- Download from https://fedoraproject.org/cloud/download -->
+      <source pool='testing' volume='fedora.qcow2' />
+      <target dev='vda' bus='virtio' />
+      <boot order='1' />
+    </disk>
+    <disk type='volume' device='disk' model='virtio-non-transitional'>
+      <driver name='qemu' type='raw' />
+      <!-- cloud-localds seed.img user-data meta-data -->
+      <source pool='testing' volume='fedora-seed.img' />
+      <target dev='vdb' bus='virtio' />
+    </disk>
+    <interface type='network'>
+      <source network='testing' />
+      <model type='virtio-non-transitional' />
+      <driver name='vhost' queues='4' ioeventfd='on' />
+    </interface>
+    <video>
+      <model type='none' />
+    </video>
+    <serial type='pty' />
+    <console type='pty' />
+    <channel type='unix'>
+      <target type='virtio' name='org.qemu.guest_agent.0' />
+    </channel>
+    <tpm model='tpm-crb'>
+      <backend type='emulator' version='2.0' />
+    </tpm>
+    <rng model='virtio-non-transitional'>
+      <backend model='random'>/dev/random</backend>
+    </rng>
+    <watchdog model='i6300esb' action='reset' />
+    <panic model='pvpanic' />
+    <memballoon model='none' />
+  </devices>
+  <genid />
+</domain>

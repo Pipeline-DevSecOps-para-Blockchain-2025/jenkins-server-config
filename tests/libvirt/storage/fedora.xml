@@ -1,0 +1,18 @@
+<?xml-model href="/usr/share/libvirt/schemas/storagevol.rng"?>
+<!--
+Download from https://fedoraproject.org/cloud/download and:
+```sh
+virsh pool-define local/libvirt/storage/testing.pool.xml
+virsh vol-create testing local/libvirt/storage/fedora.xml
+virsh vol-upload /var/lib/libvirt/testing/fedora.qcow2 ~/Downloads/Fedora-Cloud-*.qcow2
+```
+-->
+<volume type='file'>
+  <name>fedora.qcow2</name>
+  <capacity unit='GiB'>10</capacity><!-- will be auto adjusted -->
+  <allocation>0</allocation>
+  <target>
+    <format type='qcow2' />
+    <compat>1.1</compat>
+  </target>
+</volume>
