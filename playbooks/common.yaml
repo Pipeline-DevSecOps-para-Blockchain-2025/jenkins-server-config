@@ -3,4 +3,6 @@
   roles:
     - role: firewalld
     - role: sshd
+    - role: certbot
+      when: configure_tls
     - role: interactive_tools

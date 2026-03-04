@@ -26,8 +26,6 @@ packages:
   - git
   # Server networking:
   - nginx
-  - certbot
-  - python3-certbot-nginx
 
 resolv_conf:
   options:
@@ -75,12 +73,4 @@ ansible:
 runcmd:
   - [loginctl, enable-linger, runner]
   - [systemctl, enable, --now, nginx.service]
-  - |
-    {% if ds and ds.meta_data and ds.meta_data.notls -%}
-    echo 'TLS disabled'
-    {%- else -%}
-    certbot run --nginx -d '{{ domain }}' --redirect --hsts --staple-ocsp -m tiagodepalves@gmail.com --agree-tos -n
-    systemctl enable --now certbot-renew.timer
-    {%- endif %}
-    # identation guard
   - [systemctl, reload, nginx.service]

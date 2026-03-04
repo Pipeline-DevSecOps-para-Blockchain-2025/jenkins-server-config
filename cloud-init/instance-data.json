@@ -1,8 +1,7 @@
 {
   "ds": {
     "meta_data": {
-      "ansible_pull_url": "git://192.168.88.1/jenkins-server-config",
-      "notls": true
+      "ansible_pull_url": "git://192.168.88.1/jenkins-server-config"
     }
   },
   "v1": {

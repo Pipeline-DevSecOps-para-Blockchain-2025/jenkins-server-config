@@ -1,0 +1,22 @@
+- name: Install certbot
+  ansible.builtin.package:
+    name:
+      - certbot
+      - python3-certbot-nginx
+    state: present
+
+- name: Obtain certificate and configure nginx
+  ansible.builtin.command:
+    cmd: >-
+      certbot run --nginx
+        -d '{{ server_domain }}'
+        --redirect --hsts --staple-ocsp
+        -m '{{ certbot_email }}'
+        --agree-tos -n
+    creates: '/etc/letsencrypt/live/{{ server_domain }}/fullchain.pem'
+
+- name: Enable certbot renewal timer
+  ansible.builtin.systemd_service:
+    name: certbot-renew.timer
+    enabled: true
+    state: started
