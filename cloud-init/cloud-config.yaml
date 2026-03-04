@@ -25,7 +25,6 @@ package_update: true
 packages:
   - git
   # Server networking:
-  - firewalld
   - nginx
   - certbot
   - python3-certbot-nginx
@@ -149,10 +148,6 @@ ansible:
       connection: local
 
 runcmd:
-  - [systemctl, enable, --now, firewalld.service]
-  - [firewall-cmd, --permanent, --add-service=http]
-  - [firewall-cmd, --permanent, --add-service=https]
-  - [firewall-cmd, --reload]
   - [loginctl, enable-linger, runner]
   - [systemctl, enable, --now, nginx.service]
   - |

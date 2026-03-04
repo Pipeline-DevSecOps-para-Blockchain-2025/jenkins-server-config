@@ -1,3 +1,4 @@
 - name: Common VPS setup
   hosts: all
-  roles: []
+  roles:
+    - role: firewalld
