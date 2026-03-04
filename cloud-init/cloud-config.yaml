@@ -7,18 +7,6 @@ vendor_data:
   enabled: false
 
 hostname: '{{ v1.local_hostname }}'
-ssh_pwauth: false # authorized keys only
-
-users:
-  - name: runner
-    groups: [wheel]
-    shell: /usr/bin/bash
-    lock_passwd: false # allow password locally
-    passwd: $y$jFT$gfbd6pgR7SkbmwBxM1pIp0$8AJO9OAl0b3dNLMg5HJcNOzkWCYcVezsBDkPMr3Zkm6
-    ssh_authorized_keys: # prefer `-sk` (FIDO/U2F) keys
-      - sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAINczWuNAtwE1eBt9quk1HmbzGdLlGDb7BBL6SgUFay8QAAAABHNzaDo= marmis@marmis-arch
-      - sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAILBqGX/KZaYWuWIHBR4CQu7rgnfKYbr57fPnerlCA1FyAAAABHNzaDo= marmis@marmis-samsung
-      - sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAID0FKhzEMNixWGnA2fZy7oP9yf1vbnFhTc+0jg6bbxHhAAAABHNzaDo= marmis@dev-sec-ops-tiago
 
 resolv_conf:
   options:
@@ -46,6 +34,3 @@ reporting:
     level: INFO
   stdout:
     type: print
-
-runcmd:
-  - [loginctl, enable-linger, runner]

@@ -1,0 +1,3 @@
+{% for key in lookup('fileglob', playbook_dir + '/../pubkeys/*.pub', wantlist=True) %}
+{{ lookup('file', key) }}
+{% endfor %}
