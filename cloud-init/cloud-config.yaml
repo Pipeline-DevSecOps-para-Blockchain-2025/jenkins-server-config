@@ -28,10 +28,6 @@ packages:
   - nginx
   - certbot
   - python3-certbot-nginx
-  # Local services:
-  - podman
-  - crun-krun
-  - passt
   # Interactive tools:
   - bat
   - fd-find
@@ -74,22 +70,6 @@ write_files:
         }
       }
 
-  - path: /etc/containers/containers.conf.d/99-custom.conf
-    owner: root:root
-    permissions: '0644'
-    content: |
-      [containers]
-      log_driver = "journald"
-      log_tag = "container/{% raw %}{{.Name}}{% endraw %}"
-      dns_options = ["edns0", "trust-ad"]
-
-      [engine]
-      runtime = "krun"
-      image_parallel_copies = 12
-      compression_format = "zstd"
-      compression_level = 5
-      compose_warning_logs = true
-
   - path: /etc/profile.d/sh.local
     owner: root:root
     permissions: '0644'
@@ -114,6 +94,7 @@ ansible:
       playbook_names:
         - playbooks/fedora-cloud.yaml
         - playbooks/common.yaml
+        - playbooks/jenkins.yaml
       connection: local
 
 runcmd:
