@@ -4,6 +4,7 @@ set -eu
 cd "$(dirname "${0}")"
 
 cleanup() {
+  kill "${GIT_DAEMON_PID:-}" || :
   rm -f "${SEED:-}" "${IMAGE:-}" || :
 }
 trap 'cleanup' EXIT INT TERM HUP
@@ -27,6 +28,15 @@ if ! virsh net-list --name | grep -qFx testing; then
   virsh net-start --network testing
 fi
 
+# serve the repo over git:// for ansible-pull
+# see ../meta-data.yaml
+REPO_ROOT="$(realpath ../..)"
+git daemon --reuseaddr --export-all \
+  --listen=192.168.88.1 --port=9418 \
+  --base-path="${REPO_ROOT%/*}" \
+  "${REPO_ROOT}" &
+GIT_DAEMON_PID=$!
+
 # see storage/fedora-base.xml
 SOURCE='https://edgeuno-bog2.mm.fcix.net/fedora/linux/releases/43/Cloud/x86_64/images/Fedora-Cloud-Base-Generic-43-1.6.x86_64.qcow2'
 if ! virsh vol-key --pool testing --vol fedora-base.qcow2 > /dev/null 2>&1; then
@@ -47,9 +57,9 @@ if ! virsh vol-key --pool testing --vol fedora-seed.img > /dev/null 2>&1; then
   virsh vol-create --pool testing storage/fedora-seed.xml --validate
 fi
 
-# see ../../cloud-config.yaml
+# see ../cloud-config.yaml
 SEED="$(mktemp --tmpdir 'seed-XXXXXXXXXX.img')"
-cloud-localds "${SEED}" ../../cloud-config.yaml ../meta-data.yaml
+cloud-localds "${SEED}" ../cloud-config.yaml ../meta-data.yaml
 virsh vol-upload --pool testing --vol fedora-seed.img "${SEED}"
 
 # see qemu/fedora.xml

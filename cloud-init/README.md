@@ -1,4 +1,4 @@
-# Setup for a Secure Jenkins Server on Fedora
+# VPS and VM setup
 
 ## cloud-init
 
@@ -12,10 +12,10 @@ Valid schema ./cloud-config.yaml
 To verify that the template output is correct:
 
 ```console
-$ cloud-init devel render -i tests/instance-data.json ./cloud-config.yaml
+$ cloud-init devel render -i ./instance-data.json ./cloud-config.yaml
 #cloud-config
 
-hostname: 'jenkins-server-example'
+hostname: 'devsecops-libvirt-server'
 
 packages:
   - kitty-terminfo
@@ -26,7 +26,7 @@ packages:
 Prepare the cloud-init config:
 
 ```console
-$ cloud-localds seed.img ./cloud-config.yaml tests/meta-data.yaml
+$ cloud-localds seed.img ./cloud-config.yaml ./meta-data.yaml
 ```
 
 Then load a virtual machine:

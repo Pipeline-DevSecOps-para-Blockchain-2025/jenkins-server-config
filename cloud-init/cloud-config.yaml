@@ -25,6 +25,7 @@ package_update: true
 package_upgrade: true
 packages:
   - dnf-automatic
+  - git
   # Server networking:
   - firewalld
   - nginx
@@ -156,6 +157,15 @@ write_files:
         fi
         unset GREEN ORANGE RESET
       fi
+
+ansible:
+  install_method: distro
+  package_name: ansible
+  pull:
+    - url: '{{ ds.meta_data.ansible_pull_url | default("https://github.com/Pipeline-DevSecOps-para-Blockchain-2025/jenkins-server-config.git") }}'
+      playbook_names:
+        - playbooks/common.yaml
+      connection: local
 
 runcmd:
   - [systemctl, enable, --now, dnf-automatic.timer]
