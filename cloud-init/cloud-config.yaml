@@ -22,9 +22,7 @@ users:
 
 package_reboot_if_required: true
 package_update: true
-package_upgrade: true
 packages:
-  - dnf-automatic
   - git
   # Server networking:
   - firewalld
@@ -51,24 +49,6 @@ resolv_conf:
     trust-ad: true
 
 write_files:
-  - path: /etc/dnf/dnf.conf
-    owner: root:root
-    permissions: '0644'
-    content: |
-      [main]
-      install_weak_deps = no
-      excludepkgs = qemu-user*
-
-  - path: /etc/dnf/automatic.conf
-    owner: root:root
-    permissions: '0644'
-    content: |
-      [commands]
-      upgrade_type = default
-      download_updates = yes
-      apply_updates = yes
-      reboot = never
-
   - path: /etc/nginx/conf.d/jenkins.conf
     owner: root:root
     permissions: '0644'
@@ -164,11 +144,11 @@ ansible:
   pull:
     - url: '{{ ds.meta_data.ansible_pull_url | default("https://github.com/Pipeline-DevSecOps-para-Blockchain-2025/jenkins-server-config.git") }}'
       playbook_names:
+        - playbooks/fedora-cloud.yaml
         - playbooks/common.yaml
       connection: local
 
 runcmd:
-  - [systemctl, enable, --now, dnf-automatic.timer]
   - [systemctl, enable, --now, firewalld.service]
   - [firewall-cmd, --permanent, --add-service=http]
   - [firewall-cmd, --permanent, --add-service=https]
