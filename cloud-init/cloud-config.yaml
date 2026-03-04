@@ -28,15 +28,6 @@ packages:
   - nginx
   - certbot
   - python3-certbot-nginx
-  # Interactive tools:
-  - bat
-  - fd-find
-  - fzf
-  - du-dust
-  - kitty-terminfo
-  - nano
-  - ncurses-term
-  - ripgrep
 
 resolv_conf:
   options:
@@ -69,22 +60,6 @@ write_files:
           proxy_buffering   off;
         }
       }
-
-  - path: /etc/profile.d/sh.local
-    owner: root:root
-    permissions: '0644'
-    content: |
-      # for interactive shells only
-      if [[ $- == *i* ]]; then
-        GREEN="\[$(tput setaf 2)\]"
-        ORANGE="\[$(tput setaf 11)\]"
-        RESET="\[$(tput sgr0)\]"
-        PS1="${GREEN}[${ORANGE}\u@\h${RESET} \W${GREEN}]\$${RESET} "
-        if command -v fzf > /dev/null; then
-          eval "$(fzf --bash)"
-        fi
-        unset GREEN ORANGE RESET
-      fi
 
 ansible:
   install_method: distro

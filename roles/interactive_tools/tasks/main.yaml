@@ -1,0 +1,20 @@
+- name: Install interactive tools
+  ansible.builtin.package:
+    name:
+      - bat
+      - fd-find
+      - fzf
+      - du-dust
+      - kitty-terminfo
+      - nano
+      - ncurses-term
+      - ripgrep
+    state: present
+
+- name: Configure shell profile
+  ansible.builtin.copy:
+    src: sh.local
+    dest: /etc/profile.d/sh.local
+    owner: root
+    group: root
+    mode: '0644'

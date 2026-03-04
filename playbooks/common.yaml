@@ -3,3 +3,4 @@
   roles:
     - role: firewalld
     - role: sshd
+    - role: interactive_tools
