@@ -74,37 +74,6 @@ write_files:
         }
       }
 
-  - path: /etc/ssh/sshd_config.d/20-authentication.conf
-    owner: root:root
-    permissions: '0440'
-    content: |
-      # Deny root access
-      PermitRootLogin no
-
-      # Enable public key
-      AuthenticationMethods publickey
-      PubkeyAuthentication yes
-
-      # Disable password
-      PasswordAuthentication no
-      KbdInteractiveAuthentication no
-
-  - path: /etc/ssh/sshd_config.d/50-algorithms.conf
-    owner: root:root
-    permissions: '0440'
-    content: |
-      # Recommended
-      KexAlgorithms sntrup761x25519-sha512,sntrup761x25519-sha512@openssh.com,mlkem768x25519-sha256,curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group18-sha512,diffie-hellman-group16-sha512,diffie-hellman-group-exchange-sha256
-      HostKeyAlgorithms ssh-ed25519-cert-v01@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com,rsa-sha2-512-cert-v01@openssh.com,rsa-sha2-256-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,ssh-ed25519,rsa-sha2-512,rsa-sha2-256
-      MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com
-      Ciphers aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
-
-      # Insecure
-      KexAlgorithms -ecdh-sha2-nistp*,diffie-hellman-group14-sha256
-      HostKeyAlgorithms -ecdsa-sha2-nistp*,sk-ecdsa-sha2-nistp*
-      MACs -hmac-sha1*,hmac-sha2-256,hmac-sha2-512,umac-64*,umac-128@openssh.com
-      Ciphers -chacha20-poly1305@openssh.com
-
   - path: /etc/containers/containers.conf.d/99-custom.conf
     owner: root:root
     permissions: '0644'
