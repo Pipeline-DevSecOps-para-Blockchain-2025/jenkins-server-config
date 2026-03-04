@@ -1,0 +1,8 @@
+- name: Configure jenkins nginx vhost
+  ansible.builtin.template:
+    src: jenkins.conf.j2
+    dest: /etc/nginx/conf.d/jenkins.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Reload nginx

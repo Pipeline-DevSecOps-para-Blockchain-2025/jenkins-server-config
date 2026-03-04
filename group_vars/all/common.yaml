@@ -1,1 +1,2 @@
 configure_tls: true
+server_domain: '_'

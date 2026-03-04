@@ -2,6 +2,7 @@
   hosts: all
   roles:
     - role: firewalld
+    - role: nginx
     - role: sshd
     - role: certbot
       when: configure_tls

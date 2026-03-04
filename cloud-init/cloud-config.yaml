@@ -24,40 +24,11 @@ package_reboot_if_required: true
 package_update: true
 packages:
   - git
-  # Server networking:
-  - nginx
 
 resolv_conf:
   options:
     edns0: true
     trust-ad: true
-
-write_files:
-  - path: /etc/nginx/conf.d/jenkins.conf
-    owner: root:root
-    permissions: '0644'
-    content: |
-      {% set domain = "static.206.69.245.188.clients.your-server.de" -%}
-      limit_req_zone $binary_remote_addr zone=jenkins_limit:10m rate=10r/s;
-
-      server {
-        listen 80;
-        listen [::]:80;
-
-        server_name {{ domain }};
-
-        # Proxy everything to Jenkins on localhost:8080
-        location / {
-          limit_req zone=jenkins_limit burst=20 nodelay;
-
-          proxy_pass        http://127.0.0.1:8080;
-          proxy_set_header  Host $host;
-          proxy_set_header  X-Real-IP $remote_addr;
-          proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header  X-Forwarded-Proto $scheme;
-          proxy_buffering   off;
-        }
-      }
 
 ansible:
   install_method: distro
@@ -72,5 +43,3 @@ ansible:
 
 runcmd:
   - [loginctl, enable-linger, runner]
-  - [systemctl, enable, --now, nginx.service]
-  - [systemctl, reload, nginx.service]
