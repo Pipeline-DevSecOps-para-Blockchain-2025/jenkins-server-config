@@ -18,3 +18,25 @@
     owner: root
     group: root
     mode: '0644'
+
+- name: Ensure serial-getty@.service.d directory exists
+  ansible.builtin.file:
+    path: /etc/systemd/system/serial-getty@.service.d
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Gather service facts
+  ansible.builtin.service_facts:
+
+- name: Configure serial console terminal type
+  ansible.builtin.copy:
+    src: serial-getty@.service.d/default-terminfo.conf
+    dest: /etc/systemd/system/serial-getty@.service.d/default-terminfo.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - Reload systemd
+    - Restart serial consoles

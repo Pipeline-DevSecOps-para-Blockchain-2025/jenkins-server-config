@@ -28,6 +28,7 @@ resolv_conf:
 packages:
   - git
 
+# https://docs.cloud-init.io/en/latest/reference/modules.html#ansible
 ansible:
   install_method: distro
   package_name: ansible
@@ -38,6 +39,13 @@ ansible:
         - playbooks/common.yaml
         - playbooks/jenkins.yaml
       connection: local
+
+reporting:
+  logs:
+    type: log
+    level: INFO
+  stdout:
+    type: print
 
 runcmd:
   - [loginctl, enable-linger, runner]
