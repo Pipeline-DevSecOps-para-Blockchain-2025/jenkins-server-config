@@ -1,4 +1,0 @@
-- name: Fedora Cloud baseline
-  hosts: fedora
-  roles:
-    - role: fedora_setup

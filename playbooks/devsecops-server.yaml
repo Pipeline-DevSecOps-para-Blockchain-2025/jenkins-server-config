@@ -1,6 +1,8 @@
-- name: Common VPS setup
+- name: Setup DevSecOps server
   hosts: all
   roles:
+    - role: fedora_setup
+      when: "'fedora' in group_names"
     - role: firewalld
     - role: unprivileged_user
     - role: nginx
@@ -8,3 +10,5 @@
     - role: certbot
       when: configure_tls
     - role: interactive_tools
+    - role: podman
+    - role: jenkins

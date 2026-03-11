@@ -1,5 +1,0 @@
-- name: Jenkins service
-  hosts: all
-  roles:
-    - role: podman
-    - role: jenkins
