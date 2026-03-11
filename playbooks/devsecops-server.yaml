@@ -12,3 +12,4 @@
     - role: interactive_tools
     - role: podman
     - role: jenkins
+    - role: grafana

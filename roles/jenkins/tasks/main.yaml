@@ -23,9 +23,7 @@
     owner: runner
     group: runner
     mode: '0600'
-  notify:
-    - Reload user systemd
-    - Restart jenkins
+  notify: Restart jenkins
 
 - name: Copy Jenkins container quadlet
   ansible.builtin.copy:
@@ -34,6 +32,4 @@
     owner: runner
     group: runner
     mode: '0600'
-  notify:
-    - Reload user systemd
-    - Restart jenkins
+  notify: Restart jenkins

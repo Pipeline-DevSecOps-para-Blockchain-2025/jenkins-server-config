@@ -1,0 +1,71 @@
+- name: Configure grafana nginx location
+  ansible.builtin.template:
+    src: grafana.conf.j2
+    dest: /etc/nginx/default.d/grafana.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Reload nginx
+
+- name: Create grafana config directory
+  ansible.builtin.file:
+    path: /home/runner/.config/grafana/provisioning/datasources
+    state: directory
+    recurse: true
+    owner: runner
+    group: runner
+    mode: '0700'
+
+- name: Copy grafana.ini
+  ansible.builtin.copy:
+    src: grafana.ini
+    dest: /home/runner/.config/grafana/grafana.ini
+    owner: runner
+    group: runner
+    mode: '0600'
+    force: false
+
+- name: Copy VictoriaMetrics datasource
+  ansible.builtin.copy:
+    src: victoriametrics_datasource.yaml
+    dest: /home/runner/.config/grafana/provisioning/datasources/victoriametrics.yaml
+    owner: runner
+    group: runner
+    mode: '0600'
+    force: false
+
+- name: Copy VictoriaMetrics volume quadlet
+  ansible.builtin.copy:
+    src: victoriametrics_data.volume
+    dest: /home/runner/.config/containers/systemd/victoriametrics_data.volume
+    owner: runner
+    group: runner
+    mode: '0600'
+  notify: Restart victoriametrics
+
+- name: Copy VictoriaMetrics container quadlet
+  ansible.builtin.copy:
+    src: victoriametrics.container
+    dest: /home/runner/.config/containers/systemd/victoriametrics.container
+    owner: runner
+    group: runner
+    mode: '0600'
+  notify: Restart victoriametrics
+
+- name: Copy grafana data volume quadlet
+  ansible.builtin.copy:
+    src: grafana_data.volume
+    dest: /home/runner/.config/containers/systemd/grafana_data.volume
+    owner: runner
+    group: runner
+    mode: '0600'
+  notify: Restart grafana
+
+- name: Copy grafana container quadlet
+  ansible.builtin.copy:
+    src: grafana.container
+    dest: /home/runner/.config/containers/systemd/grafana.container
+    owner: runner
+    group: runner
+    mode: '0600'
+  notify: Restart grafana

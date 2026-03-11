@@ -1,0 +1,14 @@
+[Unit]
+Description=VictoriaMetrics
+
+[Container]
+Image=docker.io/victoriametrics/victoria-metrics:latest
+ContainerName=victoriametrics
+Volume=victoriametrics_data.volume:/storage
+Exec=-storageDataPath=/storage
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

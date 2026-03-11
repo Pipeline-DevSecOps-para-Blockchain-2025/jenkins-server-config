@@ -1,0 +1,26 @@
+- name: Reload nginx
+  ansible.builtin.service:
+    name: nginx
+    state: reloaded
+
+- name: Restart victoriametrics
+  ansible.builtin.systemd_service:
+    name: victoriametrics
+    state: restarted
+    scope: user
+    daemon_reload: true
+  become: true
+  become_user: runner
+  become_method: su
+  become_flags: '-l'
+
+- name: Restart grafana
+  ansible.builtin.systemd_service:
+    name: grafana
+    state: restarted
+    scope: user
+    daemon_reload: true
+  become: true
+  become_user: runner
+  become_method: su
+  become_flags: '-l'
