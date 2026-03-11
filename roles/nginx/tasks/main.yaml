@@ -9,13 +9,14 @@
     state: true
     persistent: true
 
-- name: Copy main nginx configuration
-  ansible.builtin.copy:
-    src: nginx.conf
+- name: Configure nginx
+  ansible.builtin.template:
+    src: nginx.conf.j2
     dest: /etc/nginx/nginx.conf
     owner: root
     group: root
     mode: '0644'
+  notify: Reload nginx
 
 - name: Start and enable nginx
   ansible.builtin.service:
