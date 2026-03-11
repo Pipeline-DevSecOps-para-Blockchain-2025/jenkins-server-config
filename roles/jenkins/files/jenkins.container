@@ -1,0 +1,18 @@
+[Unit]
+Description=Jenkins CI
+
+[Container]
+Image=docker.io/jenkins/jenkins:latest
+ContainerName=jenkins
+# Default HTTP port
+PublishPort=8080:8080
+# Exposed for Jenkins agents
+PublishPort=50000:50000
+# Jenkins data
+Volume=jenkins_home.volume:/var/jenkins_home
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

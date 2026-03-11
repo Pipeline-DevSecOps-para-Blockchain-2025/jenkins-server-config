@@ -12,6 +12,7 @@
     path: /home/runner/.ssh
     state: directory
     owner: runner
+    group: runner
     mode: '0700'
 
 - name: Configure authorized_keys
@@ -19,6 +20,7 @@
     src: authorized_keys.j2
     dest: /home/runner/.ssh/authorized_keys
     owner: runner
+    group: runner
     mode: '0600'
 
 - name: Enable linger for users with linger enabled

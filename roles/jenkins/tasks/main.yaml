@@ -1,8 +1,39 @@
 - name: Configure jenkins nginx vhost
   ansible.builtin.template:
     src: jenkins.conf.j2
-    dest: /etc/nginx/conf.d/jenkins.conf
+    dest: /etc/nginx/default.d/jenkins.conf
     owner: root
     group: root
     mode: '0644'
   notify: Reload nginx
+
+- name: Create quadlets directory
+  ansible.builtin.file:
+    path: /home/runner/.config/containers/systemd
+    state: directory
+    recurse: true
+    owner: runner
+    group: runner
+    mode: '0700'
+
+- name: Copy Jenkins volume quadlet
+  ansible.builtin.copy:
+    src: jenkins_home.volume
+    dest: /home/runner/.config/containers/systemd/jenkins_home.volume
+    owner: runner
+    group: runner
+    mode: '0600'
+  notify:
+    - Reload user systemd
+    - Restart jenkins
+
+- name: Copy Jenkins container quadlet
+  ansible.builtin.copy:
+    src: jenkins.container
+    dest: /home/runner/.config/containers/systemd/jenkins.container
+    owner: runner
+    group: runner
+    mode: '0600'
+  notify:
+    - Reload user systemd
+    - Restart jenkins

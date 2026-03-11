@@ -3,6 +3,20 @@
     name: nginx
     state: present
 
+- name: Allow nginx to proxy to upstream services
+  ansible.posix.seboolean:
+    name: httpd_can_network_connect
+    state: true
+    persistent: true
+
+- name: Copy main nginx configuration
+  ansible.builtin.copy:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: root
+    mode: '0644'
+
 - name: Start and enable nginx
   ansible.builtin.service:
     name: nginx
