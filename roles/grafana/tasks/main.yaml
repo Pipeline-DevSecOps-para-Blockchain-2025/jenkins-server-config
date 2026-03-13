@@ -14,7 +14,7 @@
     recurse: true
     owner: runner
     group: runner
-    mode: '0700'
+    mode: '0755'
 
 - name: Copy grafana.ini
   ansible.builtin.copy:
@@ -22,7 +22,7 @@
     dest: /home/runner/.config/grafana/grafana.ini
     owner: runner
     group: runner
-    mode: '0600'
+    mode: '0644'
     force: false
 
 - name: Copy VictoriaMetrics datasource
@@ -31,7 +31,7 @@
     dest: /home/runner/.config/grafana/provisioning/datasources/victoriametrics.yaml
     owner: runner
     group: runner
-    mode: '0600'
+    mode: '0644'
     force: false
 
 - name: Copy VictoriaMetrics volume quadlet
