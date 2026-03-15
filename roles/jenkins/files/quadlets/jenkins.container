@@ -1,13 +1,15 @@
 [Unit]
 Description=Jenkins CI
+After=jenkins-build.service
+Requires=jenkins-build.service
+PropagatesStopTo=jenkins-build.service
 
 [Container]
 ContainerName=jenkins
 Label=service=jenkins
 Network=services.network
 
-Image=docker.io/jenkins/jenkins:latest
-Pull=always
+Image=jenkins.build
 # Default HTTP port
 PublishPort=8080:8080
 # Exposed for Jenkins agents (internal)

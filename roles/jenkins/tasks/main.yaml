@@ -7,6 +7,41 @@
     mode: '0644'
   notify: Reload nginx
 
+- name: Create jenkins config directory
+  ansible.builtin.file:
+    path: /home/runner/.config/jenkins
+    state: directory
+    owner: runner
+    group: runner
+    mode: '0700'
+
+- name: Copy Containerfile
+  ansible.builtin.copy:
+    src: config/Containerfile
+    dest: /home/runner/.config/jenkins/Containerfile
+    owner: runner
+    group: runner
+    mode: '0644'
+  notify: Restart jenkins
+
+- name: Copy plugins.txt
+  ansible.builtin.copy:
+    src: config/plugins.txt
+    dest: /home/runner/.config/jenkins/plugins.txt
+    owner: runner
+    group: runner
+    mode: '0644'
+  notify: Restart jenkins
+
+- name: Copy Jenkins build quadlet
+  ansible.builtin.copy:
+    src: quadlets/jenkins.build
+    dest: /home/runner/.config/containers/systemd/jenkins.build
+    owner: runner
+    group: runner
+    mode: '0600'
+  notify: Restart jenkins
+
 - name: Copy Jenkins volume quadlet
   ansible.builtin.copy:
     src: quadlets/jenkins_home.volume

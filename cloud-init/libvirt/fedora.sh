@@ -38,7 +38,7 @@ git daemon --reuseaddr --export-all \
 GIT_DAEMON_PID=$!
 
 # see storage/fedora-base.xml
-SOURCE='https://edgeuno-bog2.mm.fcix.net/fedora/linux/releases/43/Cloud/x86_64/images/Fedora-Cloud-Base-Generic-43-1.6.x86_64.qcow2'
+SOURCE='https://download.fedoraproject.org/pub/fedora/linux/releases/43/Cloud/x86_64/images/Fedora-Cloud-Base-Generic-43-1.6.x86_64.qcow2'
 if ! virsh vol-key --pool testing --vol fedora-base.qcow2 > /dev/null 2>&1; then
   virsh vol-create --pool testing storage/fedora-base.xml --validate
   IMAGE="$(mktemp --tmpdir 'fedora-XXXXXXXXXX.qcow2')"

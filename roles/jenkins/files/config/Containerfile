@@ -1,0 +1,18 @@
+# syntax=docker/dockerfile:1
+
+# See https://github.com/jenkinsci/docker/blob/master/README.md#installing-more-tools
+FROM docker.io/jenkins/jenkins:latest
+
+ENV JAVA_OPTS \
+    -Dorg.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS=true \
+    -Dnew-build-page.flag.defaultValue=true \
+    -Dnew-dashboard-page.flag.defaultValue=true \
+    -Dnew-job-page.flag.defaultValue=true \
+    -Dnew-manage-jenkins.flag.defaultValue=true \
+    ${JAVA_OPTS}
+ENV PLUGINS_FORCE_UPGRADE=true
+
+COPY --chown=jenkins:jenkins plugins.txt /usr/share/jenkins/ref/plugins.txt
+
+RUN jenkins-plugin-cli --plugin-file /usr/share/jenkins/ref/plugins.txt \
+    && echo 2.0 > /usr/share/jenkins/ref/jenkins.install.UpgradeWizard.state

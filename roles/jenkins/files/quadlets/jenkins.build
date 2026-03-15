@@ -1,0 +1,11 @@
+[Unit]
+Description=Build Jenkins CI
+
+[Build]
+ImageTag=localhost/jenkins:latest
+GlobalArgs=--runtime=crun
+SetWorkingDirectory=%E/jenkins
+Pull=always
+
+[Install]
+WantedBy=default.target

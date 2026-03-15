@@ -11,7 +11,7 @@
       certbot run --nginx
         -d '{{ server_domain }}'
         --redirect --hsts --staple-ocsp
-        -m '{{ certbot_email }}'
+        -m '{{ admin_email }}'
         --agree-tos -n
     creates: '/etc/letsencrypt/live/{{ server_domain }}/fullchain.pem'
   notify: Reload nginx

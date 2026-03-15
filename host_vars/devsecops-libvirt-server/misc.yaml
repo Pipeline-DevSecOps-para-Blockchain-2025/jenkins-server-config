@@ -1,1 +1,2 @@
 configure_tls: false
+admin_email: admin@example.org
