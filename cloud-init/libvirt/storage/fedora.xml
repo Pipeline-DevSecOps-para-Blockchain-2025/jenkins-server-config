@@ -8,12 +8,13 @@ virsh vol-create testing local/libvirt/storage/fedora.xml
 -->
 <volume type='file'>
   <name>fedora.qcow2</name>
-  <target>
-    <format type='qcow2' />
-    <compat>1.1</compat>
-  </target>
+  <capacity unit='GiB'>20</capacity>
   <backingStore>
     <path>/var/lib/libvirt/testing/fedora-base.qcow2</path>
     <format type='qcow2' />
   </backingStore>
+  <target>
+    <format type='qcow2' />
+    <compat>1.1</compat>
+  </target>
 </volume>

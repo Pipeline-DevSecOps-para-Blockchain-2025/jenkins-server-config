@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # See https://github.com/jenkinsci/docker/blob/master/README.md#installing-more-tools
-FROM docker.io/jenkins/jenkins:latest
+FROM docker.io/jenkins/jenkins:alpine
 
 ENV JAVA_OPTS \
     -Dorg.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS=true \
@@ -12,7 +12,7 @@ ENV JAVA_OPTS \
     ${JAVA_OPTS}
 ENV PLUGINS_FORCE_UPGRADE=true
 
-COPY --chown=jenkins:jenkins plugins.txt /usr/share/jenkins/ref/plugins.txt
+COPY --chown=jenkins:jenkins plugins.txt ${REF}/plugins.txt
 
-RUN jenkins-plugin-cli --plugin-file /usr/share/jenkins/ref/plugins.txt \
-    && echo 2.0 > /usr/share/jenkins/ref/jenkins.install.UpgradeWizard.state
+RUN jenkins-plugin-cli --plugin-file ${REF}/plugins.txt --clean-download-directory \
+    && echo 2.0 > ${REF}/jenkins.install.UpgradeWizard.state
