@@ -15,6 +15,7 @@ PublishPort=3000:3000
 Volume=grafana_data.volume:/var/lib/grafana
 Volume=%E/grafana/grafana.ini:/etc/grafana/grafana.ini:ro,Z
 Volume=%E/grafana/provisioning:/etc/grafana/provisioning:ro,Z
+Environment=GF_PLUGINS_PREINSTALL_SYNC=victoriametrics-metrics-datasource
 
 [Service]
 Restart=always

@@ -7,14 +7,18 @@
     mode: '0644'
   notify: Reload nginx
 
-- name: Create grafana config directory
+- name: Create grafana config directories
   ansible.builtin.file:
-    path: /home/runner/.config/grafana/provisioning/datasources
+    path: /home/runner/.config/grafana/provisioning/{{ item }}
     state: directory
-    recurse: true
     owner: runner
     group: runner
     mode: '0755'
+  loop:
+    - datasources
+    - dashboards
+    - plugins
+    - alerting
 
 - name: Copy grafana.ini
   ansible.builtin.copy:
