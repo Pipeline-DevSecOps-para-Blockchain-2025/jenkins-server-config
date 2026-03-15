@@ -1,7 +1,7 @@
 - name: Setup DevSecOps server
   hosts: all
   roles:
-    - role: fedora_setup
+    - role: dnf
       when: "'fedora' in group_names"
     - role: firewalld
     - role: unprivileged_user
