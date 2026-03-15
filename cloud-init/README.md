@@ -43,3 +43,5 @@ See the [official documentation](https://cloudinit.readthedocs.io/en/latest/howt
 ### Testing with libvirt
 
 Checkout the [fedora.sh](./libvirt/fedora.sh) script. Requires at least 4 GiB of hugepages allocated.
+
+You might need to add `libvirt libvirt_guest` NSS modules to `/etc/nsswitch.conf`, see [Libvirt NSS module](https://libvirt.org/nss.html).

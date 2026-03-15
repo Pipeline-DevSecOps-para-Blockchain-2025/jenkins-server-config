@@ -88,7 +88,7 @@ unclassified:
     hookSecretConfigs:
       - credentialsId: GitHub Shared Secret
         signatureAlgorithm: SHA256
-    hookUrl: https://{{ server_domain }}/github-webhook/
+    hookUrl: '{{ 'https' if configure_tls else 'http' }}://{{ server_domain }}/github-webhook/'
   location:
     adminAddress: '{{ admin_email }}'
-    url: 'https://{{ server_domain }}/'
+    url: '{{ 'https' if configure_tls else 'http' }}://{{ server_domain }}/'

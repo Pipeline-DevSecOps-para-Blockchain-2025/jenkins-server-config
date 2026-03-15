@@ -16,6 +16,7 @@ virsh net-start testing
   <ip address='192.168.88.1' netmask='255.255.255.0'>
     <dhcp>
       <range start='192.168.88.2' end='192.168.88.254' />
+      <host mac='52:54:00:88:00:61' name='devsecops-libvirt-server' ip='192.168.88.61' />
     </dhcp>
   </ip>
   <ip family='ipv6' address='fd00:192:168:88::1' prefix='64' />

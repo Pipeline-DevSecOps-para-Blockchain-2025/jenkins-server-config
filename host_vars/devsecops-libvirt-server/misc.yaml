@@ -1,3 +1,5 @@
+ansible_host: 192.168.88.61
+server_domain: devsecops-libvirt-server
 configure_tls: false
 admin_email: admin@example.org
 runner_password: $y$jFT$CwNWkqkJv3jVcfM5WzH0j1$bHsLKWRPBbqtxwRir9Gc2gcge9sug2MkklPkSDOHYs9 # runner

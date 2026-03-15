@@ -1,3 +1,5 @@
+ansible_host: 192.168.88.61
 server_domain: static.206.69.245.188.clients.your-server.de
+configure_tls: true
 admin_email: tiagodepalves@gmail.com
 runner_password: $y$jFT$gfbd6pgR7SkbmwBxM1pIp0$8AJO9OAl0b3dNLMg5HJcNOzkWCYcVezsBDkPMr3Zkm6

@@ -29,7 +29,7 @@ http {
     include             /etc/nginx/mime.types;
     default_type        application/octet-stream;
 
-    limit_req_zone $binary_remote_addr zone=per_ip:10m rate=10r/s;
+    limit_req_zone $binary_remote_addr zone=per_ip:10m rate=50r/s;
 
     # Load modular configuration files from the /etc/nginx/conf.d directory.
     # See http://nginx.org/en/docs/ngx_core_module.html#include
@@ -67,7 +67,7 @@ http {
     server {
         listen       80;
         listen       [::]:80;
-        server_name  {{ server_domain }};
+        server_name  _;
         root         /usr/share/nginx/html;
 
         # Load configuration files for the default server block.

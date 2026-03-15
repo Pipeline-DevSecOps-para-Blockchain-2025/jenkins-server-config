@@ -1,8 +1,8 @@
 <?xml-model href="/usr/share/libvirt/schemas/domain.rng"?>
 <!-- virsh create local/libvirt/qemu/fedora.xml -->
 <domain type='kvm'>
-  <title>Fedora Cloud</title>
-  <name>fedora</name>
+  <title>DevSecOps libvirt server</title>
+  <name>devsecops-libvirt-server</name>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo='http://libosinfo.org/xmlns/libvirt/domain/1.0'>
       <libosinfo:os id='http://fedoraproject.org/fedora/43' />
@@ -79,6 +79,7 @@
       <source network='testing' />
       <model type='virtio-non-transitional' />
       <driver name='vhost' queues='4' ioeventfd='on' />
+      <mac address='52:54:00:88:00:61' />
     </interface>
     <video>
       <model type='none' />
