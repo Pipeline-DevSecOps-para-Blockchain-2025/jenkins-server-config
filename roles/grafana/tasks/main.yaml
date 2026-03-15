@@ -20,23 +20,61 @@
     - plugins
     - alerting
 
-- name: Copy grafana.ini
-  ansible.builtin.copy:
-    src: grafana.ini
+- name: Configure grafana.ini
+  ansible.builtin.template:
+    src: grafana.ini.j2
     dest: /home/runner/.config/grafana/grafana.ini
     owner: runner
     group: runner
     mode: '0644'
-    force: false
+  notify: Restart grafana
 
 - name: Copy VictoriaMetrics datasource
   ansible.builtin.copy:
-    src: datasources/victoriametrics.yaml
+    src: provisioning/datasources/victoriametrics.yaml
     dest: /home/runner/.config/grafana/provisioning/datasources/victoriametrics.yaml
     owner: runner
     group: runner
     mode: '0644'
-    force: false
+
+- name: Copy dashboard provisioning config
+  ansible.builtin.copy:
+    src: provisioning/dashboards/dashboards.yaml
+    dest: /home/runner/.config/grafana/provisioning/dashboards/dashboards.yaml
+    owner: runner
+    group: runner
+    mode: '0644'
+  notify: Restart grafana
+
+- name: Create grafana dashboards directory
+  ansible.builtin.file:
+    path: /home/runner/.config/grafana/dashboards
+    state: directory
+    owner: runner
+    group: runner
+    mode: '0755'
+
+- name: Copy grafana dashboards
+  ansible.builtin.copy:
+    src: dashboards/
+    dest: /home/runner/.config/grafana/dashboards/
+    owner: runner
+    group: runner
+    mode: '0644'
+  notify: Restart grafana
+
+- name: Create Grafana Podman secrets
+  containers.podman.podman_secret:
+    name: grafana-admin-password
+    data: '{{ vault_grafana_admin_password }}'
+    state: present
+    force: true
+  become: true
+  become_user: runner
+  become_method: su
+  become_flags: '-l'
+  no_log: true
+  notify: Restart grafana
 
 - name: Copy VictoriaMetrics volume quadlet
   ansible.builtin.copy:

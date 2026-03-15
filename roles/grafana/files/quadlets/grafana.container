@@ -15,7 +15,10 @@ PublishPort=3000:3000
 Volume=grafana_data.volume:/var/lib/grafana
 Volume=%E/grafana/grafana.ini:/etc/grafana/grafana.ini:ro,Z
 Volume=%E/grafana/provisioning:/etc/grafana/provisioning:ro,Z
+Volume=%E/grafana/dashboards:/var/lib/grafana/dashboards:ro,Z
 Environment=GF_PLUGINS_PREINSTALL_SYNC=victoriametrics-metrics-datasource
+Secret=grafana-admin-password,type=mount,target=/run/secrets/grafana-admin-password
+Environment=GF_SECURITY_ADMIN_PASSWORD__FILE=/run/secrets/grafana-admin-password
 
 [Service]
 Restart=always
