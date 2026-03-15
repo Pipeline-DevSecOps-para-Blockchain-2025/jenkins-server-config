@@ -11,9 +11,17 @@
       - ripgrep
     state: present
 
+- name: Configure general environment
+  ansible.builtin.copy:
+    src: environment
+    dest: /etc/environment
+    owner: root
+    group: root
+    mode: '0644'
+
 - name: Configure shell profile
   ansible.builtin.copy:
-    src: sh.local
+    src: profile.d/sh.local
     dest: /etc/profile.d/sh.local
     owner: root
     group: root
