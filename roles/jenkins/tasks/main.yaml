@@ -7,15 +7,6 @@
     mode: '0644'
   notify: Reload nginx
 
-- name: Create quadlets directory
-  ansible.builtin.file:
-    path: /home/runner/.config/containers/systemd
-    state: directory
-    recurse: true
-    owner: runner
-    group: runner
-    mode: '0700'
-
 - name: Copy Jenkins volume quadlet
   ansible.builtin.copy:
     src: quadlets/jenkins_home.volume

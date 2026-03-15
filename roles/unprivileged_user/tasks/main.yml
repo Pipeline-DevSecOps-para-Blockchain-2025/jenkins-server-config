@@ -27,3 +27,20 @@
   ansible.builtin.command:
     cmd: loginctl enable-linger runner
     creates: /var/lib/systemd/linger/runner
+
+- name: Create quadlets directory
+  ansible.builtin.file:
+    path: /home/runner/.config/containers/systemd
+    state: directory
+    owner: runner
+    group: runner
+    mode: '0700'
+
+- name: Copy services network quadlet
+  ansible.builtin.copy:
+    src: systemd/services.network
+    dest: /home/runner/.config/containers/systemd/services.network
+    owner: runner
+    group: runner
+    mode: '0600'
+  notify: Reload user systemd

@@ -5,6 +5,7 @@ After=victoriametrics.service
 [Container]
 ContainerName=grafana
 Label=service=grafana
+Network=services.network
 
 Image=docker.io/grafana/grafana:latest
 Pull=always

@@ -4,6 +4,7 @@ Description=Jenkins CI
 [Container]
 ContainerName=jenkins
 Label=service=jenkins
+Network=services.network
 
 Image=docker.io/jenkins/jenkins:latest
 Pull=always

@@ -4,6 +4,7 @@ Description=VictoriaMetrics
 [Container]
 ContainerName=victoriametrics
 Label=service=grafana
+Network=services.network
 
 Image=docker.io/victoriametrics/victoria-metrics:latest
 Pull=always
