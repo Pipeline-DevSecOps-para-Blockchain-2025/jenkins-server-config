@@ -39,3 +39,7 @@ $ qemu-system-x86_64 -m 1024 -net nic -net user \
 ```
 
 See the [official documentation](https://cloudinit.readthedocs.io/en/latest/howto/launch_qemu.html "Run cloud-init locally with QEMU") for more details.
+
+### Testing with libvirt
+
+Checkout the [fedora.sh](./libvirt/fedora.sh) script. Requires at least 4 GiB of hugepages allocated.

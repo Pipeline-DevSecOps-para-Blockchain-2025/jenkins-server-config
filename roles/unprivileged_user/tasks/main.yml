@@ -3,7 +3,7 @@
     name: runner
     groups: [wheel]
     shell: /usr/bin/bash
-    password: $y$jFT$gfbd6pgR7SkbmwBxM1pIp0$8AJO9OAl0b3dNLMg5HJcNOzkWCYcVezsBDkPMr3Zkm6
+    password: '{{ runner_password }}'
     update_password: on_create
     state: present
 

@@ -1,0 +1,7 @@
+users:
+  marmis:
+    name: Tiago de Paula
+    email: tiagodepalves@gmail.com
+    timezone: America/Sao_Paulo
+    ssh_key: marmis.pub
+    jenkins_password: $2a$12$RbH1rcNj.w/6DojPCw/1vuwlaLOD4MFD1f2avRWiDcqqMlzYdxOxC
