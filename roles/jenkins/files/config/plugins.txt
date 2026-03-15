@@ -1,6 +1,7 @@
 antisamy-markup-formatter
 audit-trail
 build-timeout
+configuration-as-code
 dark-theme
 docker-workflow
 github-branch-source

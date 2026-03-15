@@ -15,6 +15,13 @@ PublishPort=8080:8080
 # Exposed for Jenkins agents (internal)
 PublishPort=50000:50000
 Volume=jenkins_home.volume:/var/jenkins_home
+Volume=%E/jenkins/jenkins.yaml:/var/jenkins_config/jenkins.yaml:ro,Z
+Environment=CASC_JENKINS_CONFIG=/var/jenkins_config/jenkins.yaml
+Secret=github-app-private-key,type=mount,target=/secrets/jenkins/GITHUB_APP_PRIVATE_KEY
+Secret=github-shared-secret,type=mount,target=/secrets/jenkins/GITHUB_SHARED_SECRET
+Secret=github-client-secret,type=mount,target=/secrets/jenkins/GITHUB_CLIENT_SECRET
+Secret=github-pat,type=mount,target=/secrets/jenkins/GITHUB_PAT
+Environment=SECRETS=/secrets/jenkins
 
 [Service]
 Restart=always

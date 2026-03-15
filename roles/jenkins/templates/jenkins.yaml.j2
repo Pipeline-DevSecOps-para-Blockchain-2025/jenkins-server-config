@@ -1,0 +1,83 @@
+jenkins:
+  authorizationStrategy:
+    globalMatrix:
+      entries:
+        - user:
+            name: anonymous
+            permissions:
+              - Job/Read
+              - Metrics/View
+              - Overall/Read
+              - View/Read
+        - group:
+            name: authenticated
+            permissions:
+              - Overall/Administer
+  markupFormatter:
+    rawHtml:
+      disableSyntaxHighlighting: false
+  numExecutors: 4
+  securityRealm:
+    local:
+      allowsSignup: false
+  slaveAgentPort: 50000
+
+appearance:
+  pipelineGraphView:
+    showGraphOnBuildPage: true
+    showGraphOnJobPage: true
+    showStageDurations: true
+    showStageNames: true
+  themeManager:
+    disableUserThemes: true
+    theme: dark
+
+security:
+  contentSecurityPolicy:
+    enforce: true
+  gitHostKeyVerificationConfiguration:
+    sshHostKeyVerificationStrategy: knownHostsFileVerificationStrategy
+
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+          - gitHubApp:
+              id: Pipeline-DevSecOps-Jenkins
+              appID: '{{ github_app_id }}'
+              privateKey: '${readFile:/secrets/jenkins/GITHUB_APP_PRIVATE_KEY}'
+              repositoryAccessStrategy: inferOwner
+          - string:
+              id: GitHub Shared Secret
+              scope: SYSTEM
+              secret: '${GITHUB_SHARED_SECRET}'
+          - string:
+              id: GitHub Client Secret
+              scope: SYSTEM
+              secret: '${GITHUB_CLIENT_SECRET}'
+          - string:
+              id: GitHub Personal Access Token
+              scope: SYSTEM
+              secret: '${GITHUB_PAT}'
+
+unclassified:
+  audit-trail:
+    logBuildCause: true
+    logCredentialsUsage: true
+    pattern: '.*/(?:configSubmit|doDelete|postBuildResult|enable|disable|cancelQueue|stop|toggleLogKeep|doWipeOutWorkspace|createItem|createView|toggleOffline|cancelQuietDown|quietDown|restart|exit|safeExit)/?.*'
+  defaultFolderConfiguration:
+    healthMetrics:
+      - primaryBranchHealthMetric
+  gitHubConfiguration:
+    apiRateLimitChecker: ThrottleForNormalize
+  gitHubPluginConfig:
+    configs:
+      - credentialsId: GitHub Personal Access Token
+        name: Pipeline-DevSecOps-para-Blockchain-2025
+    hookSecretConfigs:
+      - credentialsId: GitHub Shared Secret
+        signatureAlgorithm: SHA256
+    hookUrl: https://{{ server_domain }}/github-webhook/
+  location:
+    adminAddress: '{{ admin_email }}'
+    url: 'https://{{ server_domain }}/'

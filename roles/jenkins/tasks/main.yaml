@@ -15,6 +15,28 @@
     group: runner
     mode: '0700'
 
+- name: Create Jenkins Podman secrets
+  containers.podman.podman_secret:
+    name: '{{ item.name }}'
+    data: '{{ item.value }}'
+    state: present
+    force: true
+  become: true
+  become_user: runner
+  become_method: su
+  become_flags: '-l'
+  loop:
+    - name: github-shared-secret
+      value: '{{ vault_github_shared_secret }}'
+    - name: github-client-secret
+      value: '{{ vault_github_client_secret }}'
+    - name: github-pat
+      value: '{{ vault_github_pat }}'
+    - name: github-app-private-key
+      value: '{{ vault_github_app_private_key }}'
+  no_log: true
+  notify: Restart jenkins
+
 - name: Copy Containerfile
   ansible.builtin.copy:
     src: config/Containerfile
@@ -28,6 +50,15 @@
   ansible.builtin.copy:
     src: config/plugins.txt
     dest: /home/runner/.config/jenkins/plugins.txt
+    owner: runner
+    group: runner
+    mode: '0644'
+  notify: Restart jenkins
+
+- name: Configure jenkins CasC
+  ansible.builtin.template:
+    src: jenkins.yaml.j2
+    dest: /home/runner/.config/jenkins/jenkins.yaml
     owner: runner
     group: runner
     mode: '0644'
