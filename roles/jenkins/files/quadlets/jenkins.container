@@ -2,13 +2,15 @@
 Description=Jenkins CI
 
 [Container]
-Image=docker.io/jenkins/jenkins:latest
 ContainerName=jenkins
+Label=service=jenkins
+
+Image=docker.io/jenkins/jenkins:latest
+Pull=always
 # Default HTTP port
 PublishPort=8080:8080
-# Exposed for Jenkins agents
+# Exposed for Jenkins agents (internal)
 PublishPort=50000:50000
-# Jenkins data
 Volume=jenkins_home.volume:/var/jenkins_home
 
 [Service]

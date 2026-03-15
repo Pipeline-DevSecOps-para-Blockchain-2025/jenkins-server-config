@@ -2,8 +2,11 @@
 Description=VictoriaMetrics
 
 [Container]
-Image=docker.io/victoriametrics/victoria-metrics:latest
 ContainerName=victoriametrics
+Label=service=grafana
+
+Image=docker.io/victoriametrics/victoria-metrics:latest
+Pull=always
 Volume=victoriametrics_data.volume:/storage
 Exec=-storageDataPath=/storage
 

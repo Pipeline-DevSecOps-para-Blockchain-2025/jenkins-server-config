@@ -3,13 +3,16 @@ Description=Grafana
 After=victoriametrics.service
 
 [Container]
-Image=docker.io/grafana/grafana:latest
 ContainerName=grafana
-# Exposed for nginx proxy
+Label=service=grafana
+
+Image=docker.io/grafana/grafana:latest
+Pull=always
+# Default HTTP port
 PublishPort=3000:3000
 Volume=grafana_data.volume:/var/lib/grafana
-Volume=%h/.config/grafana/grafana.ini:/etc/grafana/grafana.ini:ro
-Volume=%h/.config/grafana/provisioning:/etc/grafana/provisioning:ro
+Volume=%E/grafana/grafana.ini:/etc/grafana/grafana.ini:ro
+Volume=%E/grafana/provisioning:/etc/grafana/provisioning:ro
 
 [Service]
 Restart=always
