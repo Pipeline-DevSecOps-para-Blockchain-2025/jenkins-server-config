@@ -9,7 +9,7 @@
     state: restarted
     scope: user
     daemon_reload: true
-  become: '{{ ansible_user_id != "runner" }}'
+  become: '{{ ansible_facts["user_id"] != "runner" }}'
   become_user: runner
   become_method: su
   become_flags: '-l'
@@ -20,7 +20,7 @@
     state: restarted
     scope: user
     daemon_reload: true
-  become: '{{ ansible_user_id != "runner" }}'
+  become: '{{ ansible_facts["user_id"] != "runner" }}'
   become_user: runner
   become_method: su
   become_flags: '-l'

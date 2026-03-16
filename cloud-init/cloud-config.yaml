@@ -24,6 +24,7 @@ ansible:
     - url: '{{ ds.meta_data.ansible_pull_url | default("https://github.com/Pipeline-DevSecOps-para-Blockchain-2025/jenkins-server-config.git") }}'
       playbook_names: [playbooks/devsecops-server.yaml]
       connection: local
+      tags: all
 
 reporting:
   logs:

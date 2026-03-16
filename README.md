@@ -18,6 +18,20 @@ mkpasswd -m bcrypt -R 12 | sed 's/$2b/$2a/'
 
 ## Deploy
 
+```sh
+ansible-playbook playbooks/devsecops-server.yaml
+```
+
+Atualizar serviços como `root`:
+
+```sh
+ansible-playbook playbooks/devsecops-server.yaml --tags all -K
+```
+
 ## Testes
 
-Veja [`cloud-init/README.md`](./cloud-init/README.md).
+Veja [`cloud-init/README.md`](./cloud-init/README.md). Atualizações de infra com:
+
+```sh
+ansible-playbook playbooks/devsecops-server.yaml --limit devsecops-libvirt-server
+```
