@@ -5,6 +5,7 @@
     owner: root
     group: root
     mode: '0644'
+  when: ansible_user_id == "root"
   notify: Reload nginx
 
 - name: Create jenkins config directory
@@ -21,7 +22,7 @@
     data: '{{ item.value }}'
     state: present
     force: true
-  become: true
+  become: '{{ ansible_user_id != "runner" }}'
   become_user: runner
   become_method: su
   become_flags: '-l'

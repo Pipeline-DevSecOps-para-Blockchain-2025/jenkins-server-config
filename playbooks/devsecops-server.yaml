@@ -1,8 +1,11 @@
-- name: Setup DevSecOps server
+- name: System setup
   hosts: all
+  become: true
+  become_user: root
+  tags: [system]
   roles:
     - role: dnf
-      when: "'fedora' in group_names"
+      when: '"fedora" in group_names'
     - role: firewalld
     - role: unprivileged_user
     - role: nginx
@@ -11,5 +14,10 @@
       when: configure_tls
     - role: interactive_tools
     - role: podman
+
+- name: Service deployment
+  hosts: all
+  tags: [services]
+  roles:
     - role: jenkins
     - role: grafana
