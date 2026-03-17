@@ -42,6 +42,15 @@
         - build/plugins.txt
       notify: Restart Jenkins
 
+    - name: Copy Docker-in-Docker config
+      ansible.builtin.copy:
+        src: daemon.json
+        dest: /home/runner/.config/jenkins/daemon.json
+        owner: runner
+        group: runner
+        mode: '0644'
+      notify: Restart dockerd
+
 - name: Set up Jenkins service
   block:
     - name: Create Jenkins Podman secrets
@@ -78,6 +87,18 @@
         - jenkins-home.volume
         - jenkins.build
       notify: Restart Jenkins
+
+    - name: Copy dockerd quadlets
+      ansible.builtin.copy:
+        src: quadlets/{{ item  }}
+        dest: /home/runner/.config/containers/systemd/{{ item }}
+        owner: runner
+        group: runner
+        mode: '0600'
+      loop:
+        - dockerd.container
+        - dockerd-cache.volume
+      notify: Restart dockerd
 
 - name: Reload services
   meta: flush_handlers

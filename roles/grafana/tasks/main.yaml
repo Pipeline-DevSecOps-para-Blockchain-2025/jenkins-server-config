@@ -79,11 +79,19 @@
       loop:
         - grafana.container
         - grafana-data.volume
+      notify: Restart Grafana
+
+    - name: Copy VictoriaMetrics quadlets
+      ansible.builtin.copy:
+        src: quadlets/{{ item }}
+        dest: /home/runner/.config/containers/systemd/{{ item }}
+        owner: runner
+        group: runner
+        mode: '0600'
+      loop:
         - victoriametrics.container
         - victoriametrics-data.volume
-      notify:
-        - Restart VictoriaMetrics
-        - Restart Grafana
+      notify: Restart VictoriaMetrics
 
 - name: Reload services
   meta: flush_handlers

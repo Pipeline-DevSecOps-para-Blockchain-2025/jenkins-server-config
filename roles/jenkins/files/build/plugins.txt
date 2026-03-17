@@ -3,7 +3,8 @@ audit-trail
 build-timeout
 configuration-as-code
 dark-theme
-docker-workflow
+docker-commons
+docker-plugin
 github-branch-source
 github-checks
 github-scm-trait-notification-context

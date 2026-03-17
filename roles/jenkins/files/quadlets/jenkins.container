@@ -1,8 +1,9 @@
 [Unit]
 Description=Jenkins CI
-After=jenkins-build.service
-Requires=jenkins-build.service
-PropagatesStopTo=jenkins-build.service
+After=jenkins.build
+Wants=dockerd.container
+Requires=jenkins.build
+PropagatesStopTo=jenkins.build dockerd.container
 
 [Container]
 ContainerName=jenkins
@@ -12,8 +13,6 @@ Network=services.network
 Image=jenkins.build
 # Default HTTP port
 PublishPort=8080:8080
-# Exposed for Jenkins agents (internal)
-PublishPort=50000:50000
 Volume=jenkins-home.volume:/var/jenkins_home
 Volume=%E/jenkins/jenkins.yaml:/var/jenkins_config/jenkins.yaml:ro,Z
 Environment=CASC_JENKINS_CONFIG=/var/jenkins_config/jenkins.yaml

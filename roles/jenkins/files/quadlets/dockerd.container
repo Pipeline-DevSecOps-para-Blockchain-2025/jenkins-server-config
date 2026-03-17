@@ -1,0 +1,24 @@
+[Unit]
+Description=Docker-in-Docker daemon
+
+[Container]
+ContainerName=dockerd
+Label=service=jenkins
+Network=services.network
+
+Image=docker.io/docker:dind
+Pull=always
+PodmanArgs=--runtime=crun --privileged
+Volume=dockerd-cache.volume:/var/lib/docker
+Environment=DOCKER_TLS_CERTDIR=
+Volume=%E/jenkins/daemon.json:/etc/docker/daemon.json:ro,Z
+Ulimit=nofile=-1
+Ulimit=nproc=-1
+Ulimit=core=-1
+PidsLimit=-1
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target

@@ -16,7 +16,27 @@ jenkins:
   markupFormatter:
     rawHtml:
       disableSyntaxHighlighting: false
-  numExecutors: 4
+  numExecutors: 0
+  clouds:
+    - docker:
+        name: local-docker
+        dockerApi:
+          dockerHost:
+            uri: tcp://dockerd:2375
+        exposeDockerHost: true
+        templates:
+          - labelString: docker-agent
+            pullStrategy: PULL_ALWAYS
+            dockerTemplateBase:
+              image: docker.io/jenkins/inbound-agent:alpine
+            remoteFs: /home/jenkins/agent
+            connector:
+              jnlp:
+                jenkinsUrl: http://jenkins:8080
+            instanceCapStr: '{{ jenkins_dind_agents }}'
+            retentionStrategy:
+                idleMinutes: 1
+            stopTimeout: 10
   securityRealm:
     local:
       allowsSignup: false
@@ -70,6 +90,16 @@ credentials:
               id: GitHub Personal Access Token
               scope: SYSTEM
               secret: '${GITHUB_PAT}'
+
+tool:
+  dockerTool:
+    installations:
+      - name: docker
+        properties:
+          - installSource:
+              installers:
+                - fromDocker:
+                    version: '29.3.0'
 
 unclassified:
   audit-trail:
