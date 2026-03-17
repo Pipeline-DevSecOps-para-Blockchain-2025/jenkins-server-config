@@ -101,6 +101,17 @@ tool:
                 - fromDocker:
                     version: '29.3.0'
 
+jobs:
+  - script: >
+      organizationFolder('Pipeline-DevSecOps-para-Blockchain-2025') {
+        organizations {
+          github {
+            repoOwner('Pipeline-DevSecOps-para-Blockchain-2025')
+            credentialsId('Pipeline-DevSecOps-Jenkins')
+          }
+        }
+      }
+
 unclassified:
   audit-trail:
     logBuildCause: true

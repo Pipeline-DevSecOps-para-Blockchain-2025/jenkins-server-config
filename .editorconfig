@@ -34,6 +34,6 @@ indent_size = 2
 quote_type = double
 
 # Keep single quotes for YAML
-[*.{yml,yaml}]
+[*.{yml,yml.j2,yaml,yaml.j2}]
 indent_size = 2
 quote_type = single

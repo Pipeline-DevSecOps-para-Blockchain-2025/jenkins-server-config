@@ -20,6 +20,6 @@
     - role: podman
       tags: [system]
     - role: jenkins
-      tags: [user]
+      tags: [user, jenkins]
     - role: grafana
-      tags: [user]
+      tags: [user, grafana]
