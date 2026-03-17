@@ -1,5 +1,5 @@
-github_app_private_key: TODO
-github_shared_secret: TODO
-github_client_secret: TODO
-github_pat: TODO
-grafana_admin_password: TODO
+grafana_admin_password: GRAFANA
+github_pat: INVALID
+github_shared_secret: INVALID
+github_client_secret: INVALID
+github_app_private_key: INVALID
