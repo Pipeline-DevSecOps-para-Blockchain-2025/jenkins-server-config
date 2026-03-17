@@ -4,26 +4,14 @@
     groups: [wheel]
     shell: /usr/bin/bash
     password: '{{ runner_password }}'
-    update_password: on_create
+    update_password: always
     state: present
 
-- name: Set up SSH
-  block:
-    - name: Create .ssh directory
-      ansible.builtin.file:
-        path: /home/runner/.ssh
-        state: directory
-        owner: runner
-        group: runner
-        mode: '0700'
-
-    - name: Configure authorized_keys
-      ansible.builtin.template:
-        src: authorized_keys.j2
-        dest: /home/runner/.ssh/authorized_keys
-        owner: runner
-        group: runner
-        mode: '0600'
+- name: Configure authorized_keys
+  ansible.posix.authorized_key:
+    user: runner
+    exclusive: true
+    key: '{{ users.values() | map(attribute="ssh_key") | join("") }}'
 
 - name: Set up quadlets
   block:

@@ -21,7 +21,7 @@ jenkins:
     local:
       allowsSignup: false
       users:
-{% for id, user in users.items() %}
+        {%- for id, user in users.items() +%}
         - id: '{{ id }}'
           name: '{{ user.name }}'
           password: '#jbcrypt:{{ user.jenkins_password }}'
@@ -30,7 +30,7 @@ jenkins:
                 emailAddress: '{{ user.email }}'
             - timezone:
                 timeZoneName: '{{ user.timezone }}'
-{% endfor %}
+        {%- endfor +%}
   slaveAgentPort: 50000
 
 appearance:

@@ -1,3 +1,0 @@
-{% for id, user in users.items() %}
-{{ lookup('file', playbook_dir + '/../pubkeys/' + user.ssh_key) }}
-{% endfor %}
