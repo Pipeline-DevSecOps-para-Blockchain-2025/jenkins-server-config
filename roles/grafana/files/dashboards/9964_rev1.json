@@ -1,40 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_PROMETHEUS",
-      "label": "Prometheus",
-      "description": "Prometheus Data Source",
-      "type": "datasource",
-      "pluginId": "prometheus",
-      "pluginName": "Prometheus"
-    }
-  ],
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "6.0.2"
-    },
-    {
-      "type": "panel",
-      "id": "graph",
-      "name": "Graph",
-      "version": "5.0.0"
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "5.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "singlestat",
-      "name": "Singlestat",
-      "version": "5.0.0"
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -64,7 +28,10 @@
         "rgba(237, 129, 40, 0.89)",
         "rgba(245, 54, 54, 0.9)"
       ],
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "victoriametrics"
+      },
       "editable": true,
       "error": false,
       "format": "none",
@@ -141,7 +108,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "victoriametrics"
+      },
       "editable": true,
       "error": false,
       "fill": 1,
@@ -234,7 +204,10 @@
         "rgba(237, 129, 40, 0.89)",
         "rgba(50, 172, 45, 0.97)"
       ],
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "victoriametrics"
+      },
       "editable": true,
       "error": false,
       "format": "none",
@@ -315,7 +288,10 @@
         "rgba(237, 129, 40, 0.89)",
         "rgba(50, 172, 45, 0.97)"
       ],
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "victoriametrics"
+      },
       "decimals": 1,
       "editable": true,
       "error": false,
@@ -402,7 +378,10 @@
         "rgba(237, 129, 40, 0.89)",
         "#1F60C4"
       ],
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "victoriametrics"
+      },
       "decimals": 0,
       "format": "decbytes",
       "gauge": {
@@ -485,7 +464,10 @@
         "rgba(237, 129, 40, 0.89)",
         "rgba(50, 172, 45, 0.97)"
       ],
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "victoriametrics"
+      },
       "decimals": 1,
       "editable": true,
       "error": false,
@@ -576,7 +558,10 @@
         "#C4162A",
         "#37872D"
       ],
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "victoriametrics"
+      },
       "decimals": 0,
       "editable": true,
       "error": false,
@@ -662,7 +647,10 @@
         "rgba(237, 129, 40, 0.89)",
         "rgba(50, 172, 45, 0.97)"
       ],
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "victoriametrics"
+      },
       "decimals": 1,
       "editable": true,
       "error": false,
@@ -745,7 +733,10 @@
         "rgba(237, 129, 40, 0.89)",
         "#C4162A"
       ],
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "victoriametrics"
+      },
       "format": "percent",
       "gauge": {
         "maxValue": 100,
@@ -828,7 +819,10 @@
         "#F2CC0C",
         "#F2CC0C"
       ],
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "victoriametrics"
+      },
       "decimals": null,
       "editable": true,
       "error": false,
@@ -914,7 +908,10 @@
         "rgba(237, 129, 40, 0.89)",
         "rgba(50, 172, 45, 0.97)"
       ],
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "victoriametrics"
+      },
       "decimals": null,
       "editable": true,
       "error": false,
@@ -1000,7 +997,10 @@
         "#C4162A",
         "rgb(217, 213, 213)"
       ],
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "victoriametrics"
+      },
       "decimals": null,
       "editable": true,
       "error": false,
@@ -1087,7 +1087,10 @@
         "#C4162A",
         "#FA6400"
       ],
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "victoriametrics"
+      },
       "decimals": null,
       "editable": true,
       "error": false,
@@ -1173,7 +1176,10 @@
         "#37872D",
         "rgba(245, 54, 54, 0.9)"
       ],
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "victoriametrics"
+      },
       "decimals": null,
       "editable": true,
       "error": false,
@@ -1258,7 +1264,10 @@
         "#37872D",
         "#FA6400"
       ],
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "victoriametrics"
+      },
       "decimals": null,
       "editable": true,
       "error": false,
@@ -1343,7 +1352,10 @@
         "rgba(237, 129, 40, 0.89)",
         "rgba(50, 172, 45, 0.97)"
       ],
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "victoriametrics"
+      },
       "editable": true,
       "error": false,
       "format": "none",
@@ -1423,7 +1435,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "victoriametrics"
+      },
       "editable": true,
       "error": false,
       "fill": 1,
@@ -1516,7 +1531,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "victoriametrics"
+      },
       "editable": true,
       "error": false,
       "fill": 1,
@@ -1614,7 +1632,10 @@
         "rgba(237, 129, 40, 0.89)",
         "rgba(50, 172, 45, 0.97)"
       ],
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "victoriametrics"
+      },
       "editable": true,
       "error": false,
       "format": "none",
