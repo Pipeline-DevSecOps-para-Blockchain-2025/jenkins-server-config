@@ -10,7 +10,6 @@ Network=services.network
 
 Image=docker.io/grafana/grafana:latest
 Pull=always
-PodmanArgs=--runtime=crun
 # Default HTTP port
 PublishPort=3000:3000
 Volume=grafana-data.volume:/var/lib/grafana

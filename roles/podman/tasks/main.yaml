@@ -2,7 +2,6 @@
   ansible.builtin.package:
     name:
       - podman
-      - crun-krun
       - passt
     state: present
 
