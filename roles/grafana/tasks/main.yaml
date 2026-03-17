@@ -59,7 +59,7 @@
     - name: Create Grafana Podman secrets
       containers.podman.podman_secret:
         name: grafana-admin-password
-        data: '{{ vault_grafana_admin_password }}'
+        data: '{{ grafana_admin_password }}'
         state: present
         force: true
       become: '{{ ansible_facts["user_id"] != "runner" }}'
@@ -84,3 +84,17 @@
       notify:
         - Restart VictoriaMetrics
         - Restart Grafana
+
+- name: Reload services
+  meta: flush_handlers
+
+- name: Enable and start Grafana quadlets
+  ansible.builtin.systemd_service:
+    name: grafana
+    scope: user
+    enabled: true
+    state: started
+  become: '{{ ansible_facts["user_id"] != "runner" }}'
+  become_user: runner
+  become_method: su
+  become_flags: -l

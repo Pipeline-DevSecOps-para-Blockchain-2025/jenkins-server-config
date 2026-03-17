@@ -18,7 +18,7 @@
     mode: '0644'
   notify: Reload nginx
 
-- name: Start and enable nginx
+- name: Enable and start nginx
   ansible.builtin.service:
     name: nginx
     enabled: true

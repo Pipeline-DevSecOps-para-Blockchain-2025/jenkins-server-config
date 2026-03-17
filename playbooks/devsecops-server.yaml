@@ -1,23 +1,25 @@
-- name: System setup
+- name: Service deployment
   hosts: all
-  become: true
-  become_user: root
-  tags: [system]
   roles:
     - role: dnf
       when: '"fedora" in group_names'
+      tags: [system]
     - role: firewalld
+      tags: [system]
     - role: unprivileged_user
+      tags: [system]
     - role: nginx
+      tags: [system]
     - role: sshd
+      tags: [system]
     - role: certbot
       when: configure_tls
+      tags: [system]
     - role: interactive_tools
+      tags: [system]
     - role: podman
-
-- name: Service deployment
-  hosts: all
-  tags: [services]
-  roles:
+      tags: [system]
     - role: jenkins
+      tags: [user]
     - role: grafana
+      tags: [user]

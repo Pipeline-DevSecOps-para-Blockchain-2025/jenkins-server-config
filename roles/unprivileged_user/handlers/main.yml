@@ -1,7 +1,7 @@
 - name: Reload user systemd
   ansible.builtin.systemd_service:
-    daemon_reload: true
     scope: user
+    daemon_reload: true
   become: '{{ ansible_facts["user_id"] != "runner" }}'
   become_user: runner
   become_method: su

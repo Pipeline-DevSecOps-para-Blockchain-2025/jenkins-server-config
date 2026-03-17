@@ -1,8 +1,8 @@
 - name: Restart VictoriaMetrics
   ansible.builtin.systemd_service:
     name: victoriametrics
-    state: restarted
     scope: user
+    state: restarted
     daemon_reload: true
   become: '{{ ansible_facts["user_id"] != "runner" }}'
   become_user: runner
@@ -12,8 +12,8 @@
 - name: Restart Grafana
   ansible.builtin.systemd_service:
     name: grafana
-    state: restarted
     scope: user
+    state: restarted
     daemon_reload: true
   become: '{{ ansible_facts["user_id"] != "runner" }}'
   become_user: runner

@@ -32,7 +32,7 @@
     permanent: true
     immediate: true
 
-- name: Start and enable sshd
+- name: Enable and start sshd
   ansible.builtin.service:
     name: sshd
     enabled: true

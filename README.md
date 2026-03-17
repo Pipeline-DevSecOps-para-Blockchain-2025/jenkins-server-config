@@ -25,7 +25,7 @@ ansible-playbook playbooks/devsecops-server.yaml
 Atualizar serviços como `root`:
 
 ```sh
-ansible-playbook playbooks/devsecops-server.yaml --tags all -K
+ansible-playbook playbooks/devsecops-server.yaml --tags all -Kb
 ```
 
 ## Testes
@@ -33,5 +33,5 @@ ansible-playbook playbooks/devsecops-server.yaml --tags all -K
 Veja [`cloud-init/README.md`](./cloud-init/README.md). Atualizações de infra com:
 
 ```sh
-ansible-playbook playbooks/devsecops-server.yaml --limit devsecops-libvirt-server
+ansible-playbook playbooks/devsecops-server.yaml -l devsecops-libvirt-server
 ```

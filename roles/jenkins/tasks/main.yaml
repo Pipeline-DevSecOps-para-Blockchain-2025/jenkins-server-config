@@ -56,13 +56,13 @@
       become_flags: -l
       loop:
         - name: github-shared-secret
-          value: '{{ vault_github_shared_secret }}'
+          value: '{{ github_shared_secret }}'
         - name: github-client-secret
-          value: '{{ vault_github_client_secret }}'
+          value: '{{ github_client_secret }}'
         - name: github-pat
-          value: '{{ vault_github_pat }}'
+          value: '{{ github_pat }}'
         - name: github-app-private-key
-          value: '{{ vault_github_app_private_key }}'
+          value: '{{ github_app_private_key }}'
       no_log: true
       notify: Restart Jenkins
 
@@ -78,3 +78,17 @@
         - jenkins-home.volume
         - jenkins.build
       notify: Restart Jenkins
+
+- name: Reload services
+  meta: flush_handlers
+
+- name: Enable and start Jenkins quadlets
+  ansible.builtin.systemd_service:
+    name: jenkins
+    scope: user
+    enabled: true
+    state: started
+  become: '{{ ansible_facts["user_id"] != "runner" }}'
+  become_user: runner
+  become_method: su
+  become_flags: -l
