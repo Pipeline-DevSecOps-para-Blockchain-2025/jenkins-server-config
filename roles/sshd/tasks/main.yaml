@@ -3,25 +3,27 @@
     name: openssh-server
     state: present
 
-- name: Configure sshd authentication
-  ansible.builtin.copy:
-    src: 20-authentication.conf
-    dest: /etc/ssh/sshd_config.d/20-authentication.conf
-    owner: root
-    group: root
-    mode: '0440'
-    validate: sshd -t -f %s
-  notify: Restart sshd
+- name: Configure SSH daemon
+  block:
+  - name: Configure sshd authentication
+    ansible.builtin.copy:
+      src: 20-authentication.conf
+      dest: /etc/ssh/sshd_config.d/20-authentication.conf
+      owner: root
+      group: root
+      mode: '0440'
+      validate: sshd -t -f %s
+    notify: Restart sshd
 
-- name: Configure sshd algorithms
-  ansible.builtin.copy:
-    src: 50-algorithms.conf
-    dest: /etc/ssh/sshd_config.d/50-algorithms.conf
-    owner: root
-    group: root
-    mode: '0440'
-    validate: sshd -t -f %s
-  notify: Restart sshd
+  - name: Configure sshd algorithms
+    ansible.builtin.copy:
+      src: 50-algorithms.conf
+      dest: /etc/ssh/sshd_config.d/50-algorithms.conf
+      owner: root
+      group: root
+      mode: '0440'
+      validate: sshd -t -f %s
+    notify: Restart sshd
 
 - name: Allow SSH port
   ansible.posix.firewalld:

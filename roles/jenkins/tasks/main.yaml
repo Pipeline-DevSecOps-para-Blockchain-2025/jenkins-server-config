@@ -1,4 +1,4 @@
-- name: Configure jenkins nginx vhost
+- name: Set Jenkins nginx endpoint
   ansible.builtin.template:
     src: jenkins.conf.j2
     dest: /etc/nginx/default.d/jenkins.conf
@@ -8,86 +8,73 @@
   when: ansible_facts["user_id"] == "root"
   notify: Reload nginx
 
-- name: Create jenkins config directory
-  ansible.builtin.file:
-    path: /home/runner/.config/jenkins
-    state: directory
-    owner: runner
-    group: runner
-    mode: '0700'
+- name: Configure Jenkins
+  block:
+    - name: Create config directories
+      ansible.builtin.file:
+        path: /home/runner/.config/jenkins/{{ item }}
+        state: directory
+        owner: runner
+        group: runner
+        mode: '0700'
+      loop:
+        - ''
+        - build
 
-- name: Create Jenkins Podman secrets
-  containers.podman.podman_secret:
-    name: '{{ item.name }}'
-    data: '{{ item.value }}'
-    state: present
-    force: true
-  become: '{{ ansible_facts["user_id"] != "runner" }}'
-  become_user: runner
-  become_method: su
-  become_flags: '-l'
-  loop:
-    - name: github-shared-secret
-      value: '{{ vault_github_shared_secret }}'
-    - name: github-client-secret
-      value: '{{ vault_github_client_secret }}'
-    - name: github-pat
-      value: '{{ vault_github_pat }}'
-    - name: github-app-private-key
-      value: '{{ vault_github_app_private_key }}'
-  no_log: true
-  notify: Restart jenkins
+    - name: Configure Jenkins CasC
+      ansible.builtin.template:
+        src: jenkins.yaml.j2
+        dest: /home/runner/.config/jenkins/jenkins.yaml
+        owner: runner
+        group: runner
+        mode: '0644'
+      notify: Restart Jenkins
 
-- name: Copy Containerfile
-  ansible.builtin.copy:
-    src: config/Containerfile
-    dest: /home/runner/.config/jenkins/Containerfile
-    owner: runner
-    group: runner
-    mode: '0644'
-  notify: Restart jenkins
+    - name: Copy Jenkins image config
+      ansible.builtin.copy:
+        src: '{{ item }}'
+        dest: /home/runner/.config/jenkins/{{ item }}
+        owner: runner
+        group: runner
+        mode: '0644'
+      loop:
+        - build/Containerfile
+        - build/plugins.txt
+      notify: Restart Jenkins
 
-- name: Copy plugins.txt
-  ansible.builtin.copy:
-    src: config/plugins.txt
-    dest: /home/runner/.config/jenkins/plugins.txt
-    owner: runner
-    group: runner
-    mode: '0644'
-  notify: Restart jenkins
+- name: Set up Jenkins service
+  block:
+    - name: Create Jenkins Podman secrets
+      containers.podman.podman_secret:
+        name: '{{ item.name }}'
+        data: '{{ item.value }}'
+        state: present
+        force: true
+      become: '{{ ansible_facts["user_id"] != "runner" }}'
+      become_user: runner
+      become_method: su
+      become_flags: -l
+      loop:
+        - name: github-shared-secret
+          value: '{{ vault_github_shared_secret }}'
+        - name: github-client-secret
+          value: '{{ vault_github_client_secret }}'
+        - name: github-pat
+          value: '{{ vault_github_pat }}'
+        - name: github-app-private-key
+          value: '{{ vault_github_app_private_key }}'
+      no_log: true
+      notify: Restart Jenkins
 
-- name: Configure jenkins CasC
-  ansible.builtin.template:
-    src: jenkins.yaml.j2
-    dest: /home/runner/.config/jenkins/jenkins.yaml
-    owner: runner
-    group: runner
-    mode: '0644'
-  notify: Restart jenkins
-
-- name: Copy Jenkins build quadlet
-  ansible.builtin.copy:
-    src: quadlets/jenkins.build
-    dest: /home/runner/.config/containers/systemd/jenkins.build
-    owner: runner
-    group: runner
-    mode: '0600'
-  notify: Restart jenkins
-
-- name: Copy Jenkins volume quadlet
-  ansible.builtin.copy:
-    src: quadlets/jenkins_home.volume
-    dest: /home/runner/.config/containers/systemd/jenkins_home.volume
-    owner: runner
-    group: runner
-    mode: '0600'
-  notify: Restart jenkins
-
-- name: Copy Jenkins container quadlet
-  ansible.builtin.copy:
-    src: quadlets/jenkins.container
-    dest: /home/runner/.config/containers/systemd/jenkins.container
-    owner: runner
-    group: runner
-    mode: '0600'
-  notify: Restart jenkins
+    - name: Copy Jenkins quadlets
+      ansible.builtin.copy:
+        src: quadlets/{{ item  }}
+        dest: /home/runner/.config/containers/systemd/{{ item }}
+        owner: runner
+        group: runner
+        mode: '0600'
+      loop:
+        - jenkins.container
+        - jenkins-home.volume
+        - jenkins.build
+      notify: Restart Jenkins

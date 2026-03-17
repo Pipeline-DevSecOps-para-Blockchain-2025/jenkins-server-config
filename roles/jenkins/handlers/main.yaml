@@ -1,9 +1,4 @@
-- name: Reload nginx
-  ansible.builtin.service:
-    name: nginx
-    state: reloaded
-
-- name: Restart jenkins
+- name: Restart Jenkins
   ansible.builtin.systemd_service:
     name: jenkins
     state: restarted
@@ -12,4 +7,4 @@
   become: '{{ ansible_facts["user_id"] != "runner" }}'
   become_user: runner
   become_method: su
-  become_flags: '-l'
+  become_flags: -l

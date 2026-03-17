@@ -1,4 +1,4 @@
-- name: Install podman
+- name: Install Podman
   ansible.builtin.package:
     name:
       - podman
@@ -6,7 +6,7 @@
       - passt
     state: present
 
-- name: Create containers.conf.d directory
+- name: Create config override directory
   ansible.builtin.file:
     path: /etc/containers/containers.conf.d
     state: directory

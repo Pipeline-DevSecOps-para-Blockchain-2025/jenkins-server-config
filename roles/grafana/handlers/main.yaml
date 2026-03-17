@@ -1,9 +1,4 @@
-- name: Reload nginx
-  ansible.builtin.service:
-    name: nginx
-    state: reloaded
-
-- name: Restart victoriametrics
+- name: Restart VictoriaMetrics
   ansible.builtin.systemd_service:
     name: victoriametrics
     state: restarted
@@ -12,9 +7,9 @@
   become: '{{ ansible_facts["user_id"] != "runner" }}'
   become_user: runner
   become_method: su
-  become_flags: '-l'
+  become_flags: -l
 
-- name: Restart grafana
+- name: Restart Grafana
   ansible.builtin.systemd_service:
     name: grafana
     state: restarted
@@ -23,4 +18,4 @@
   become: '{{ ansible_facts["user_id"] != "runner" }}'
   become_user: runner
   become_method: su
-  become_flags: '-l'
+  become_flags: -l

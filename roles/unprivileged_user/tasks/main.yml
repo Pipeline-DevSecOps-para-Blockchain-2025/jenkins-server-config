@@ -1,4 +1,4 @@
-- name: Create users
+- name: Create unprivileged user
   ansible.builtin.user:
     name: runner
     groups: [wheel]
@@ -7,40 +7,44 @@
     update_password: on_create
     state: present
 
-- name: Create .ssh directory
-  ansible.builtin.file:
-    path: /home/runner/.ssh
-    state: directory
-    owner: runner
-    group: runner
-    mode: '0700'
+- name: Set up SSH
+  block:
+    - name: Create .ssh directory
+      ansible.builtin.file:
+        path: /home/runner/.ssh
+        state: directory
+        owner: runner
+        group: runner
+        mode: '0700'
 
-- name: Configure authorized_keys
-  ansible.builtin.template:
-    src: authorized_keys.j2
-    dest: /home/runner/.ssh/authorized_keys
-    owner: runner
-    group: runner
-    mode: '0600'
+    - name: Configure authorized_keys
+      ansible.builtin.template:
+        src: authorized_keys.j2
+        dest: /home/runner/.ssh/authorized_keys
+        owner: runner
+        group: runner
+        mode: '0600'
 
-- name: Enable linger for users with linger enabled
-  ansible.builtin.command:
-    cmd: loginctl enable-linger runner
-    creates: /var/lib/systemd/linger/runner
+- name: Set up quadlets
+  block:
+    - name: Enable linger
+      ansible.builtin.command:
+        cmd: loginctl enable-linger runner
+        creates: /var/lib/systemd/linger/runner
 
-- name: Create quadlets directory
-  ansible.builtin.file:
-    path: /home/runner/.config/containers/systemd
-    state: directory
-    owner: runner
-    group: runner
-    mode: '0700'
+    - name: Create quadlets directory
+      ansible.builtin.file:
+        path: /home/runner/.config/containers/systemd
+        state: directory
+        owner: runner
+        group: runner
+        mode: '0700'
 
-- name: Copy services network quadlet
-  ansible.builtin.copy:
-    src: systemd/services.network
-    dest: /home/runner/.config/containers/systemd/services.network
-    owner: runner
-    group: runner
-    mode: '0600'
-  notify: Reload user systemd
+    - name: Copy services network quadlet
+      ansible.builtin.copy:
+        src: systemd/services.network
+        dest: /home/runner/.config/containers/systemd/services.network
+        owner: runner
+        group: runner
+        mode: '0600'
+      notify: Reload user systemd

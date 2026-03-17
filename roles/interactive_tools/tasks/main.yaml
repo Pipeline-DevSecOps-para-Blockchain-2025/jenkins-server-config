@@ -11,40 +11,36 @@
       - ripgrep
     state: present
 
-- name: Configure general environment
-  ansible.builtin.copy:
-    src: environment
-    dest: /etc/environment
-    owner: root
-    group: root
-    mode: '0644'
-
 - name: Configure shell profile
   ansible.builtin.copy:
-    src: profile.d/sh.local
-    dest: /etc/profile.d/sh.local
+    src: '{{ item }}'
+    dest: /etc/{{ item }}
     owner: root
     group: root
     mode: '0644'
+  loop:
+    - environment
+    - profile.d/sh.local
+  notify: Restart serial consoles
 
-- name: Ensure serial-getty@.service.d directory exists
-  ansible.builtin.file:
-    path: /etc/systemd/system/serial-getty@.service.d
-    state: directory
-    owner: root
-    group: root
-    mode: '0755'
+- name: Update serial console
+  block:
+    - name: Create serial-getty@.service.d
+      ansible.builtin.file:
+        path: /etc/systemd/system/serial-getty@.service.d
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
 
-- name: Gather service facts
-  ansible.builtin.service_facts:
+    - name: Gather service facts
+      ansible.builtin.service_facts:
 
-- name: Configure serial console terminal type
-  ansible.builtin.copy:
-    src: serial-getty@.service.d/default-terminfo.conf
-    dest: /etc/systemd/system/serial-getty@.service.d/default-terminfo.conf
-    owner: root
-    group: root
-    mode: '0644'
-  notify:
-    - Reload systemd
-    - Restart serial consoles
+    - name: Configure serial console
+      ansible.builtin.copy:
+        src: serial-getty@.service.d/default-terminfo.conf
+        dest: /etc/systemd/system/serial-getty@.service.d/default-terminfo.conf
+        owner: root
+        group: root
+        mode: '0644'
+      notify: Restart serial consoles

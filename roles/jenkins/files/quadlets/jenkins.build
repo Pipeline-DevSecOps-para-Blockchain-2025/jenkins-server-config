@@ -4,7 +4,7 @@ Description=Build Jenkins CI
 [Build]
 ImageTag=localhost/jenkins:latest
 GlobalArgs=--runtime=crun
-SetWorkingDirectory=%E/jenkins
+SetWorkingDirectory=%E/jenkins/build
 Pull=always
 
 [Install]
