@@ -9,6 +9,12 @@
     state: true
     persistent: true
 
+- name: Check if TLS certificate exists
+  ansible.builtin.stat:
+    path: /etc/letsencrypt/live/{{ server_domain }}/fullchain.pem
+  register: tls_cert
+  when: configure_tls
+
 - name: Configure nginx
   ansible.builtin.template:
     src: nginx.conf.j2
@@ -16,6 +22,8 @@
     owner: root
     group: root
     mode: '0644'
+  vars:
+    tls_ready: '{{ configure_tls and (tls_cert.stat.exists | default(false)) }}'
   notify: Reload nginx
 
 - name: Enable and start nginx

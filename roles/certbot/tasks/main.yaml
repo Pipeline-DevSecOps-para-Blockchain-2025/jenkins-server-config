@@ -2,19 +2,54 @@
   ansible.builtin.package:
     name:
       - certbot
-      - python3-certbot-nginx
     state: present
 
-- name: Obtain certificate and configure nginx
+- name: Ensure webroot challenge directory exists
+  ansible.builtin.file:
+    path: /var/lib/letsencrypt/.well-known/acme-challenge
+    state: directory
+    owner: nginx
+    group: nginx
+    mode: '0755'
+
+- name: Obtain certificate via webroot
   ansible.builtin.command:
     cmd: >-
-      certbot run --nginx
+      certbot certonly --webroot
+        -w /var/lib/letsencrypt
         -d '{{ server_domain }}'
-        --redirect --hsts --staple-ocsp
         -m '{{ admin_email }}'
         --agree-tos -n
     creates: '/etc/letsencrypt/live/{{ server_domain }}/fullchain.pem'
+
+- name: Re-configure nginx with TLS after certificate obtained
+  ansible.builtin.template:
+    src: '{{ role_path }}/../nginx/templates/nginx.conf.j2'
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: root
+    mode: '0644'
+  vars:
+    tls_ready: true
   notify: Reload nginx
+
+- name: Ensure certbot deploy hook directory exists
+  ansible.builtin.file:
+    path: /etc/letsencrypt/renewal-hooks/deploy
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Install nginx reload deploy hook
+  ansible.builtin.copy:
+    dest: /etc/letsencrypt/renewal-hooks/deploy/reload-nginx.sh
+    owner: root
+    group: root
+    mode: '0755'
+    content: |
+      #!/bin/sh
+      systemctl reload nginx
 
 - name: Enable certbot renewal timer
   ansible.builtin.systemd_service:

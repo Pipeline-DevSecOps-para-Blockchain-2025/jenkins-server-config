@@ -36,14 +36,20 @@ http {
     # for more information.
     include /etc/nginx/conf.d/*.conf;
 
-{% if configure_tls %}
+{% if tls_ready %}
     server {
         listen       80;
         listen       [::]:80;
         server_name  {{ server_domain }};
 
-        # Redirect to HTTPS.
-        return 301   https://$host$request_uri;
+        # Allow ACME challenge through before redirecting.
+        location ^~ /.well-known/acme-challenge/ {
+            root /var/lib/letsencrypt;
+        }
+
+        location / {
+            return 301 https://$host$request_uri;
+        }
     }
 
     server {
@@ -67,9 +73,16 @@ http {
     server {
         listen       80;
         listen       [::]:80;
-        server_name  _;
+        server_name  {{ server_domain if configure_tls else '_' }};
         root         /usr/share/nginx/html;
 
+        {% if configure_tls %}
+        # ACME challenge for certbot webroot.
+        location ^~ /.well-known/acme-challenge/ {
+            root /var/lib/letsencrypt;
+        }
+
+        {% endif %}
         # Load configuration files for the default server block.
         include /etc/nginx/default.d/*.conf;
     }
