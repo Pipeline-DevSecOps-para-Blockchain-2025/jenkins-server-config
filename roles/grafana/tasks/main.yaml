@@ -57,7 +57,7 @@
 
     - name: Copy VictoriaMetrics scrape config
       ansible.builtin.copy:
-        src: provisioning/scrape/promscrape.yaml
+        src: scrape/promscrape.yaml
         dest: /home/runner/.config/grafana/scrape/promscrape.yaml
         owner: runner
         group: runner
