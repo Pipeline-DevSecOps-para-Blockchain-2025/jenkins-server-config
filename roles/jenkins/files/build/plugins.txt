@@ -12,6 +12,7 @@ gradle
 matrix-auth
 metrics
 pipeline-graph-view
+prometheus
 ssh-slaves
 theme-manager
 timestamper

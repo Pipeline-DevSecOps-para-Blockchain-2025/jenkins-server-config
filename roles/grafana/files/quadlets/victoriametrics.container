@@ -9,7 +9,8 @@ Network=services.network
 Image=docker.io/victoriametrics/victoria-metrics:latest
 Pull=always
 Volume=victoriametrics-data.volume:/storage
-Exec=-storageDataPath=/storage
+Volume=%h/.config/grafana/scrape/promscrape.yaml:/etc/victoriametrics/promscrape.yaml:ro,z
+Exec=-storageDataPath=/storage -promscrape.config=/etc/victoriametrics/promscrape.yaml
 
 [Service]
 Restart=always
