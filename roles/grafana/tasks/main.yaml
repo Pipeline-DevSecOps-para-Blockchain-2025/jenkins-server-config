@@ -53,6 +53,9 @@
         - provisioning/datasources/victoriametrics.yaml
         - provisioning/dashboards/dashboards.yaml
         - dashboards/9964_rev1.json
+        - dashboards/16029_rev1.json
+        - dashboards/21628_rev1.json
+        - dashboards/ci-security-metrics.json
       notify: Restart Grafana
 
     - name: Copy VictoriaMetrics scrape config

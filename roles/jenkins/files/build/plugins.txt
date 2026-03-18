@@ -13,6 +13,7 @@ job-dsl
 matrix-auth
 metrics
 pipeline-graph-view
+pipeline-utility-steps
 prometheus
 ssh-slaves
 theme-manager

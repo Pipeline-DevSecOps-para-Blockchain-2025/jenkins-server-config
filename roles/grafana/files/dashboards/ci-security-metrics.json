@@ -1,0 +1,810 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "victoriametrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 10
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "victoriametrics"
+          },
+          "editorMode": "code",
+          "expr": "slither_findings_total{job=~\"$job\", branch=~\"$branch\"}",
+          "instant": true,
+          "legendFormat": "Slither",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Latest Slither Findings",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "victoriametrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 10
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 6,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "victoriametrics"
+          },
+          "editorMode": "code",
+          "expr": "mythril_findings_total{job=~\"$job\", branch=~\"$branch\"}",
+          "instant": true,
+          "legendFormat": "Mythril",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Latest Mythril Findings",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "victoriametrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 12,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "victoriametrics"
+          },
+          "editorMode": "code",
+          "expr": "slither_findings_high{job=~\"$job\", branch=~\"$branch\"}",
+          "instant": true,
+          "legendFormat": "High",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Latest Slither High",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "victoriametrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "victoriametrics"
+          },
+          "editorMode": "code",
+          "expr": "mythril_findings_high{job=~\"$job\", branch=~\"$branch\"}",
+          "instant": true,
+          "legendFormat": "High",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Latest Mythril High",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "victoriametrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 4,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 5
+      },
+      "id": 5,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "victoriametrics"
+          },
+          "editorMode": "code",
+          "expr": "slither_findings_total{job=~\"$job\", branch=~\"$branch\"}",
+          "legendFormat": "Slither total",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "victoriametrics"
+          },
+          "editorMode": "code",
+          "expr": "mythril_findings_total{job=~\"$job\", branch=~\"$branch\"}",
+          "legendFormat": "Mythril total",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Findings Over Time",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "victoriametrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 6,
+        "x": 12,
+        "y": 5
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showValue": "always",
+        "stacking": "normal",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "11.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "victoriametrics"
+          },
+          "editorMode": "code",
+          "expr": "last_over_time(slither_findings_high{job=~\"$job\", branch=~\"$branch\"}[30d])",
+          "instant": true,
+          "legendFormat": "High",
+          "range": false,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "victoriametrics"
+          },
+          "editorMode": "code",
+          "expr": "last_over_time(slither_findings_medium{job=~\"$job\", branch=~\"$branch\"}[30d])",
+          "instant": true,
+          "legendFormat": "Medium",
+          "range": false,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "victoriametrics"
+          },
+          "editorMode": "code",
+          "expr": "last_over_time(slither_findings_low{job=~\"$job\", branch=~\"$branch\"}[30d])",
+          "instant": true,
+          "legendFormat": "Low",
+          "range": false,
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "victoriametrics"
+          },
+          "editorMode": "code",
+          "expr": "last_over_time(slither_findings_informational{job=~\"$job\", branch=~\"$branch\"}[30d])",
+          "instant": true,
+          "legendFormat": "Informational",
+          "range": false,
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "victoriametrics"
+          },
+          "editorMode": "code",
+          "expr": "last_over_time(slither_findings_optimization{job=~\"$job\", branch=~\"$branch\"}[30d])",
+          "instant": true,
+          "legendFormat": "Optimization",
+          "range": false,
+          "refId": "E"
+        }
+      ],
+      "title": "Latest Slither Severity Breakdown",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "victoriametrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 6,
+        "x": 18,
+        "y": 5
+      },
+      "id": 7,
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showValue": "always",
+        "stacking": "normal",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "11.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "victoriametrics"
+          },
+          "editorMode": "code",
+          "expr": "last_over_time(mythril_findings_high{job=~\"$job\", branch=~\"$branch\"}[30d])",
+          "instant": true,
+          "legendFormat": "High",
+          "range": false,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "victoriametrics"
+          },
+          "editorMode": "code",
+          "expr": "last_over_time(mythril_findings_medium{job=~\"$job\", branch=~\"$branch\"}[30d])",
+          "instant": true,
+          "legendFormat": "Medium",
+          "range": false,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "victoriametrics"
+          },
+          "editorMode": "code",
+          "expr": "last_over_time(mythril_findings_low{job=~\"$job\", branch=~\"$branch\"}[30d])",
+          "instant": true,
+          "legendFormat": "Low",
+          "range": false,
+          "refId": "C"
+        }
+      ],
+      "title": "Latest Mythril Severity Breakdown",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "victoriametrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 14
+      },
+      "id": 8,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Time"
+          }
+        ]
+      },
+      "pluginVersion": "11.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "victoriametrics"
+          },
+          "editorMode": "code",
+          "expr": "slither_findings_total{job=~\"$job\", branch=~\"$branch\"}",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "",
+          "range": false,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "victoriametrics"
+          },
+          "editorMode": "code",
+          "expr": "mythril_findings_total{job=~\"$job\", branch=~\"$branch\"}",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "",
+          "range": false,
+          "refId": "B"
+        }
+      ],
+      "title": "Latest Raw Series",
+      "transformations": [
+        {
+          "id": "labelsToFields",
+          "options": {
+            "mode": "columns"
+          }
+        }
+      ],
+      "type": "table"
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 39,
+  "style": "dark",
+  "tags": [
+    "ci",
+    "security",
+    "slither",
+    "mythril",
+    "victoriametrics"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": "VictoriaMetrics",
+          "value": "victoriametrics"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Datasource",
+        "multi": false,
+        "name": "datasource",
+        "options": [],
+        "query": "victoriametrics-metrics-datasource",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": ".*"
+        },
+        "datasource": {
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "victoriametrics"
+        },
+        "definition": "label_values(slither_findings_total, job)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Job",
+        "multi": true,
+        "name": "job",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(slither_findings_total, job)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": ".*"
+        },
+        "datasource": {
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "victoriametrics"
+        },
+        "definition": "label_values(slither_findings_total, branch)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Branch",
+        "multi": true,
+        "name": "branch",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(slither_findings_total, branch)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-30d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "CI Security Metrics",
+  "uid": "ci-security-metrics",
+  "version": 1,
+  "weekStart": ""
+}
