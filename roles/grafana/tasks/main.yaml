@@ -92,6 +92,7 @@
       loop:
         - grafana.container
         - grafana-data.volume
+        - renderer.container
       notify: Restart Grafana
 
     - name: Copy VictoriaMetrics quadlets
