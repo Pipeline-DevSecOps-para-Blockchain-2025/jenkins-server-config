@@ -1,7 +1,7 @@
 [Unit]
 Description=Grafana
-Wants=victoriametrics.container
-PropagatesStopTo=victoriametrics.container
+Wants=victoriametrics.container renderer.container
+PropagatesStopTo=victoriametrics.container renderer.container
 
 [Container]
 ContainerName=grafana

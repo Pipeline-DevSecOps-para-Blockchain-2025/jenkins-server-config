@@ -1,0 +1,18 @@
+[Unit]
+Description=Grafana Image Renderer
+
+[Container]
+ContainerName=renderer
+Label=service=grafana
+Network=services.network
+
+Image=docker.io/grafana/grafana-image-renderer:latest
+Pull=always
+PublishPort=8081:8081
+Environment=ENABLE_METRICS=true
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target
