@@ -29,6 +29,7 @@ jenkins:
             pullStrategy: PULL_ALWAYS
             dockerTemplateBase:
               image: docker.io/jenkins/inbound-agent:alpine
+              mountsString: type=bind,source=/usr/local/bin/docker,destination=/usr/local/bin/docker,readonly=true
             remoteFs: /home/jenkins/agent
             connector:
               jnlp:
@@ -90,16 +91,6 @@ credentials:
               id: GitHub Personal Access Token
               scope: SYSTEM
               secret: '${GITHUB_PAT}'
-
-tool:
-  dockerTool:
-    installations:
-      - name: docker
-        properties:
-          - installSource:
-              installers:
-                - fromDocker:
-                    version: '29.3.0'
 
 jobs:
   - script: >
