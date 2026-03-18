@@ -8,3 +8,10 @@ users:
       sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAID0FKhzEMNixWGnA2fZy7oP9yf1vbnFhTc+0jg6bbxHhAAAABHNzaDo= marmis@dev-sec-ops-tiago
       sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAINczWuNAtwE1eBt9quk1HmbzGdLlGDb7BBL6SgUFay8QAAAABHNzaDo= marmis@marmis-arch
       sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAILBqGX/KZaYWuWIHBR4CQu7rgnfKYbr57fPnerlCA1FyAAAABHNzaDo= marmis@marmis-samsung
+  eduwill100:
+    name: Eduardo Fabricio Goza
+    email: eduwill100@gmail.com
+    timezone: America/Sao_Paulo
+    jenkins_password: $2a$12$nH0JMpOZvSPUlNA9m8NZFuC5S7amrFq1SaDIZmH1m1yKGDd2rkhJi
+    ssh_key: |
+      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEX9RHPOUDXYxInAt42cFDV5KNbIJm98EaROtPeUZxu1 eduwill100@gmail.com
