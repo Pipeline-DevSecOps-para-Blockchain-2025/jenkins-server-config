@@ -1,5 +1,5 @@
 [server]
-root_url = %(protocol)s://%(domain)s/grafana
+root_url = {{ 'https' if configure_tls else 'http' }}://{{ server_domain }}/grafana
 serve_from_sub_path = true
 
 [security]
@@ -18,6 +18,10 @@ hide_version = true
 [analytics]
 reporting_enabled = false
 check_for_updates = false
+
+[rendering]
+server_url = http://renderer:8081/render
+callback_url = http://grafana:3000/grafana/
 
 [rendering]
 server_url = http://renderer:8081/render

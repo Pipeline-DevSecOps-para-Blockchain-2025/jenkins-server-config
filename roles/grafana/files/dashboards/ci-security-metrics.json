@@ -83,7 +83,7 @@
             "uid": "victoriametrics"
           },
           "editorMode": "code",
-          "expr": "slither_findings_total{job=~\"$job\", branch=~\"$branch\"}",
+          "expr": "sum(ci_security_contract_findings_total{tool=\"slither\",job=~\"$job\",branch=~\"$branch\",contract=~\"$contract\"})",
           "instant": true,
           "legendFormat": "Slither",
           "range": false,
@@ -154,7 +154,7 @@
             "uid": "victoriametrics"
           },
           "editorMode": "code",
-          "expr": "mythril_findings_total{job=~\"$job\", branch=~\"$branch\"}",
+          "expr": "sum(ci_security_contract_findings_total{tool=\"mythril\",job=~\"$job\",branch=~\"$branch\",contract=~\"$contract\"})",
           "instant": true,
           "legendFormat": "Mythril",
           "range": false,
@@ -221,7 +221,7 @@
             "uid": "victoriametrics"
           },
           "editorMode": "code",
-          "expr": "slither_findings_high{job=~\"$job\", branch=~\"$branch\"}",
+          "expr": "sum(ci_security_findings{tool=\"slither\",severity=\"High\",job=~\"$job\",branch=~\"$branch\",contract=~\"$contract\"})",
           "instant": true,
           "legendFormat": "High",
           "range": false,
@@ -288,7 +288,7 @@
             "uid": "victoriametrics"
           },
           "editorMode": "code",
-          "expr": "mythril_findings_high{job=~\"$job\", branch=~\"$branch\"}",
+          "expr": "sum(ci_security_findings{tool=\"mythril\",severity=\"High\",job=~\"$job\",branch=~\"$branch\",contract=~\"$contract\"})",
           "instant": true,
           "legendFormat": "High",
           "range": false,
@@ -380,21 +380,10 @@
             "uid": "victoriametrics"
           },
           "editorMode": "code",
-          "expr": "slither_findings_total{job=~\"$job\", branch=~\"$branch\"}",
-          "legendFormat": "Slither total",
+          "expr": "sum by (tool) (ci_security_contract_findings_total{job=~\"$job\",branch=~\"$branch\",contract=~\"$contract\"})",
+          "legendFormat": "{{tool}} total",
           "range": true,
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "victoriametrics-metrics-datasource",
-            "uid": "victoriametrics"
-          },
-          "editorMode": "code",
-          "expr": "mythril_findings_total{job=~\"$job\", branch=~\"$branch\"}",
-          "legendFormat": "Mythril total",
-          "range": true,
-          "refId": "B"
         }
       ],
       "title": "Findings Over Time",
@@ -462,59 +451,11 @@
             "uid": "victoriametrics"
           },
           "editorMode": "code",
-          "expr": "last_over_time(slither_findings_high{job=~\"$job\", branch=~\"$branch\"}[30d])",
+          "expr": "sum by (severity) (last_over_time(ci_security_findings{tool=\"slither\",job=~\"$job\",branch=~\"$branch\",contract=~\"$contract\"}[30d]))",
           "instant": true,
-          "legendFormat": "High",
+          "legendFormat": "{{severity}}",
           "range": false,
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "victoriametrics-metrics-datasource",
-            "uid": "victoriametrics"
-          },
-          "editorMode": "code",
-          "expr": "last_over_time(slither_findings_medium{job=~\"$job\", branch=~\"$branch\"}[30d])",
-          "instant": true,
-          "legendFormat": "Medium",
-          "range": false,
-          "refId": "B"
-        },
-        {
-          "datasource": {
-            "type": "victoriametrics-metrics-datasource",
-            "uid": "victoriametrics"
-          },
-          "editorMode": "code",
-          "expr": "last_over_time(slither_findings_low{job=~\"$job\", branch=~\"$branch\"}[30d])",
-          "instant": true,
-          "legendFormat": "Low",
-          "range": false,
-          "refId": "C"
-        },
-        {
-          "datasource": {
-            "type": "victoriametrics-metrics-datasource",
-            "uid": "victoriametrics"
-          },
-          "editorMode": "code",
-          "expr": "last_over_time(slither_findings_informational{job=~\"$job\", branch=~\"$branch\"}[30d])",
-          "instant": true,
-          "legendFormat": "Informational",
-          "range": false,
-          "refId": "D"
-        },
-        {
-          "datasource": {
-            "type": "victoriametrics-metrics-datasource",
-            "uid": "victoriametrics"
-          },
-          "editorMode": "code",
-          "expr": "last_over_time(slither_findings_optimization{job=~\"$job\", branch=~\"$branch\"}[30d])",
-          "instant": true,
-          "legendFormat": "Optimization",
-          "range": false,
-          "refId": "E"
         }
       ],
       "title": "Latest Slither Severity Breakdown",
@@ -582,35 +523,11 @@
             "uid": "victoriametrics"
           },
           "editorMode": "code",
-          "expr": "last_over_time(mythril_findings_high{job=~\"$job\", branch=~\"$branch\"}[30d])",
+          "expr": "sum by (severity) (last_over_time(ci_security_findings{tool=\"mythril\",job=~\"$job\",branch=~\"$branch\",contract=~\"$contract\"}[30d]))",
           "instant": true,
-          "legendFormat": "High",
+          "legendFormat": "{{severity}}",
           "range": false,
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "victoriametrics-metrics-datasource",
-            "uid": "victoriametrics"
-          },
-          "editorMode": "code",
-          "expr": "last_over_time(mythril_findings_medium{job=~\"$job\", branch=~\"$branch\"}[30d])",
-          "instant": true,
-          "legendFormat": "Medium",
-          "range": false,
-          "refId": "B"
-        },
-        {
-          "datasource": {
-            "type": "victoriametrics-metrics-datasource",
-            "uid": "victoriametrics"
-          },
-          "editorMode": "code",
-          "expr": "last_over_time(mythril_findings_low{job=~\"$job\", branch=~\"$branch\"}[30d])",
-          "instant": true,
-          "legendFormat": "Low",
-          "range": false,
-          "refId": "C"
         }
       ],
       "title": "Latest Mythril Severity Breakdown",
@@ -645,8 +562,8 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 24,
-        "x": 0,
+        "w": 12,
+        "x": 12,
         "y": 14
       },
       "id": 8,
@@ -676,28 +593,15 @@
             "uid": "victoriametrics"
           },
           "editorMode": "code",
-          "expr": "slither_findings_total{job=~\"$job\", branch=~\"$branch\"}",
+          "expr": "ci_security_contract_findings_total{job=~\"$job\",branch=~\"$branch\",tool=~\"$tool\",contract=~\"$contract\"}",
           "format": "table",
           "instant": true,
           "legendFormat": "",
           "range": false,
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "victoriametrics-metrics-datasource",
-            "uid": "victoriametrics"
-          },
-          "editorMode": "code",
-          "expr": "mythril_findings_total{job=~\"$job\", branch=~\"$branch\"}",
-          "format": "table",
-          "instant": true,
-          "legendFormat": "",
-          "range": false,
-          "refId": "B"
         }
       ],
-      "title": "Latest Raw Series",
+      "title": "Per-Contract Latest Findings",
       "transformations": [
         {
           "id": "labelsToFields",
@@ -707,6 +611,65 @@
         }
       ],
       "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "victoriametrics-metrics-datasource",
+        "uid": "victoriametrics"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 14
+      },
+      "id": 9,
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showValue": "always",
+        "stacking": "none",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "victoriametrics-metrics-datasource",
+            "uid": "victoriametrics"
+          },
+          "editorMode": "code",
+          "expr": "topk(10, sum by (contract) (last_over_time(ci_security_contract_findings_total{tool=\"slither\",job=~\"$job\",branch=~\"$branch\"}[30d])))",
+          "instant": true,
+          "legendFormat": "{{contract}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Top 10 Contracts by Slither Findings",
+      "type": "barchart"
     }
   ],
   "refresh": "30s",
@@ -749,7 +712,7 @@
           "type": "victoriametrics-metrics-datasource",
           "uid": "victoriametrics"
         },
-        "definition": "label_values(slither_findings_total, job)",
+        "definition": "label_values(ci_security_contract_findings_total, job)",
         "hide": 0,
         "includeAll": true,
         "label": "Job",
@@ -758,7 +721,7 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(slither_findings_total, job)",
+          "query": "label_values(ci_security_contract_findings_total, job)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -777,7 +740,7 @@
           "type": "victoriametrics-metrics-datasource",
           "uid": "victoriametrics"
         },
-        "definition": "label_values(slither_findings_total, branch)",
+        "definition": "label_values(ci_security_contract_findings_total, branch)",
         "hide": 0,
         "includeAll": true,
         "label": "Branch",
@@ -786,7 +749,63 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(slither_findings_total, branch)",
+          "query": "label_values(ci_security_contract_findings_total, branch)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": ".*"
+        },
+        "datasource": {
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "victoriametrics"
+        },
+        "definition": "label_values(ci_security_contract_findings_total, tool)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Tool",
+        "multi": true,
+        "name": "tool",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(ci_security_contract_findings_total, tool)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": ".*"
+        },
+        "datasource": {
+          "type": "victoriametrics-metrics-datasource",
+          "uid": "victoriametrics"
+        },
+        "definition": "label_values(ci_security_contract_findings_total, contract)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Contract",
+        "multi": true,
+        "name": "contract",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(ci_security_contract_findings_total, contract)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -805,6 +824,6 @@
   "timezone": "browser",
   "title": "CI Security Metrics",
   "uid": "ci-security-metrics",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }

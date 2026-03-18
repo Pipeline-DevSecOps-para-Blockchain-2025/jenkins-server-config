@@ -8,7 +8,6 @@ Network=services.network
 
 Image=docker.io/grafana/grafana-image-renderer:latest
 Pull=always
-PublishPort=8081:8081
 Environment=ENABLE_METRICS=true
 
 [Service]
