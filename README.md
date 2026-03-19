@@ -19,13 +19,13 @@ mkpasswd -m bcrypt -R 12 | sed 's/$2b/$2a/'
 ## Deploy
 
 ```sh
-ansible-playbook playbooks/devsecops-server.yaml
+ansible-playbook playbooks/devsecops-server.yaml -l jenkins-server-docker --ask-vault-pass
 ```
 
 Atualizar serviços como `root`:
 
 ```sh
-ansible-playbook playbooks/devsecops-server.yaml --tags all -Kb
+ansible-playbook playbooks/devsecops-server.yaml -l jenkins-server-docker --tags all --ask-vault-pass -Kb
 ```
 
 ## Testes
