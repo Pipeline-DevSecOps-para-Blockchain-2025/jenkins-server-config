@@ -1,0 +1,31 @@
+organizationFolder('Pipeline-DevSecOps-para-Blockchain-2025') {
+    organizations {
+        github {
+            repoOwner('Pipeline-DevSecOps-para-Blockchain-2025')
+            credentialsId('Pipeline-DevSecOps-Jenkins')
+            traits {
+                // https://github.com/jenkinsci/github-branch-source-plugin/blob/master/src/main/java/org/jenkinsci/plugins/github_branch_source/BranchDiscoveryTrait.java
+                gitHubBranchDiscovery {
+                    def EXCLUDE_PRS = 1
+                    strategyId(EXCLUDE_PRS)
+                }
+                // https://github.com/jenkinsci/github-branch-source-plugin/blob/master/src/main/java/org/jenkinsci/plugins/github_branch_source/OriginPullRequestDiscoveryTrait.java
+                gitHubPullRequestDiscovery {
+                    def MERGE = 1
+                    strategyId(MERGE)
+                }
+                // https://github.com/jenkinsci/github-checks-plugin/blob/master/src/main/java/io/jenkins/plugins/checks/github/status/GitHubSCMSourceStatusChecksTrait.java
+                gitHubStatusChecks {
+                    name('Jenkins')
+                }
+            }
+        }
+    }
+    orphanedItemStrategy {
+        defaultOrphanedItemStrategy {
+            pruneDeadBranches(false)
+            daysToKeepStr('1m')
+            numToKeepStr('50')
+        }
+    }
+}

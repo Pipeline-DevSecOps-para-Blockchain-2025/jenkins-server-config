@@ -28,6 +28,9 @@
         owner: runner
         group: runner
         mode: '0644'
+      vars:
+        jobs:
+          - Pipeline-DevSecOps-para-Blockchain-2025.jenkins
       notify: Restart Jenkins
 
     - name: Copy Jenkins image config

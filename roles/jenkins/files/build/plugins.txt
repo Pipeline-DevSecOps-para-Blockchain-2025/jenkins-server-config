@@ -2,6 +2,7 @@ antisamy-markup-formatter
 audit-trail
 build-timeout
 configuration-as-code
+cloudbees-disk-usage-simple
 dark-theme
 docker-plugin
 docker-workflow

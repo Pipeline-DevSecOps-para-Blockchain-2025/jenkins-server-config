@@ -9,6 +9,7 @@
       - nano
       - ncurses-term
       - ripgrep
+      - tree
     state: present
 
 - name: Configure shell profile

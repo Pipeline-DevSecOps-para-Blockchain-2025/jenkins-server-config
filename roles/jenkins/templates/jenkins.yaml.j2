@@ -108,15 +108,10 @@ credentials:
               secret: '${GITHUB_PAT}'
 
 jobs:
-  - script: >
-      organizationFolder('Pipeline-DevSecOps-para-Blockchain-2025') {
-        organizations {
-          github {
-            repoOwner('Pipeline-DevSecOps-para-Blockchain-2025')
-            credentialsId('Pipeline-DevSecOps-Jenkins')
-          }
-        }
-      }
+  {%- for job in jobs +%}
+  - script: |
+{{ lookup('file', 'jobs/' ~ job) | indent(6, true) }}
+  {%- endfor +%}
 
 unclassified:
   audit-trail:
@@ -126,6 +121,8 @@ unclassified:
   defaultFolderConfiguration:
     healthMetrics:
       - primaryBranchHealthMetric
+  scmGit:
+    hideCredentials: true
   gitHubConfiguration:
     apiRateLimitChecker: ThrottleForNormalize
   gitHubPluginConfig:
