@@ -28,4 +28,77 @@ organizationFolder('Pipeline-DevSecOps-para-Blockchain-2025') {
             numToKeepStr('50')
         }
     }
+    configure { node ->
+        def publishers = node / 'publisher'
+        publishers << {
+            'hudson.plugins.emailext.ExtendedEmailPublisher'(plugin: 'email-ext') {
+                recipientList('$DEFAULT_RECIPIENTS')
+                configuredTriggers {
+                    'hudson.plugins.emailext.plugins.trigger.FirstFailureTrigger' {
+                        email {
+                            subject('[SECURITY] Build Failed: $PROJECT_NAME - #$BUILD_NUMBER')
+                            body('''<p>Build <b>#$BUILD_NUMBER</b> of <b>$PROJECT_NAME</b> has failed.</p>
+<p><b>Console output:</b> <a href="$BUILD_URL/console">$BUILD_URL/console</a></p>
+<p><b>Changes:</b><br/>$CHANGES</p>''')
+                            recipientList('$DEFAULT_RECIPIENTS')
+                            contentType('text/html')
+                            attachmentsPattern('')
+                            attachBuildLog(false)
+                            compressBuildLog(false)
+                            replyTo('$DEFAULT_REPLYTO')
+                            sendToDevelopers(false)
+                            sendToRequester(false)
+                            includeCulprits(false)
+                            sendToRecipientList(true)
+                        }
+                    }
+                    'hudson.plugins.emailext.plugins.trigger.FailureTrigger' {
+                        email {
+                            subject('[SECURITY] Build Still Failing: $PROJECT_NAME - #$BUILD_NUMBER')
+                            body('''<p>Build <b>#$BUILD_NUMBER</b> of <b>$PROJECT_NAME</b> is still failing.</p>
+<p><b>Console output:</b> <a href="$BUILD_URL/console">$BUILD_URL/console</a></p>
+<p><b>Changes:</b><br/>$CHANGES</p>''')
+                            recipientList('$DEFAULT_RECIPIENTS')
+                            contentType('text/html')
+                            attachmentsPattern('')
+                            attachBuildLog(false)
+                            compressBuildLog(false)
+                            replyTo('$DEFAULT_REPLYTO')
+                            sendToDevelopers(false)
+                            sendToRequester(false)
+                            includeCulprits(false)
+                            sendToRecipientList(true)
+                        }
+                    }
+                    'hudson.plugins.emailext.plugins.trigger.FixedTrigger' {
+                        email {
+                            subject('[SECURITY] Build Recovered: $PROJECT_NAME - #$BUILD_NUMBER')
+                            body('''<p>Build <b>#$BUILD_NUMBER</b> of <b>$PROJECT_NAME</b> is back to normal.</p>
+<p><b>Console output:</b> <a href="$BUILD_URL/console">$BUILD_URL/console</a></p>''')
+                            recipientList('$DEFAULT_RECIPIENTS')
+                            contentType('text/html')
+                            attachmentsPattern('')
+                            attachBuildLog(false)
+                            compressBuildLog(false)
+                            replyTo('$DEFAULT_REPLYTO')
+                            sendToDevelopers(false)
+                            sendToRequester(false)
+                            includeCulprits(false)
+                            sendToRecipientList(true)
+                        }
+                    }
+                }
+                contentType('default')
+                defaultSubject('$DEFAULT_SUBJECT')
+                defaultBody('$DEFAULT_CONTENT')
+                defaultReplyTo('')
+                defaultRecipients('$DEFAULT_RECIPIENTS')
+                attachmentsPattern('')
+                presendScript('')
+                postsendScript('')
+                attachBuildLog(false)
+                compressBuildLog(false)
+            }
+        }
+    }
 }

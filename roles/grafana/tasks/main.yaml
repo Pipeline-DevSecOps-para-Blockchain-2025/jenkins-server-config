@@ -52,6 +52,8 @@
       loop:
         - provisioning/datasources/victoriametrics.yaml
         - provisioning/dashboards/dashboards.yaml
+        - provisioning/alerting/contactpoints.yaml
+        - provisioning/alerting/notification-policies.yaml
         - dashboards/9964_rev1.json
         - dashboards/16029_rev1.json
         - dashboards/21628_rev1.json

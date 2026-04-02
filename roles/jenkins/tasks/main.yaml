@@ -75,6 +75,8 @@
           value: '{{ github_pat }}'
         - name: github-app-private-key
           value: '{{ github_app_private_key }}'
+        - name: sendgrid-api-key
+          value: '{{ sendgrid_api_key }}'
       no_log: true
       notify: Restart Jenkins
 

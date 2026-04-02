@@ -1,0 +1,16 @@
+apiVersion: 1
+
+contactPoints:
+  - orgId: 1
+    name: DevSecOps Email
+    receivers:
+      - uid: devsecops-email
+        type: email
+        disableResolveMessage: false
+        settings:
+          addresses: tiagodepalves@gmail.com;eduwill100@gmail.com
+          singleEmail: false
+          subject: |
+            {{ template "default.title" . }}
+          message: |
+            {{ template "default.message" . }}

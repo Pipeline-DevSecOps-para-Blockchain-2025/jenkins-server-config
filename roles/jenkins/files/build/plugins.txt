@@ -6,6 +6,7 @@ cloudbees-disk-usage-simple
 dark-theme
 docker-plugin
 docker-workflow
+email-ext
 github-branch-source
 github-checks
 github-scm-trait-notification-context

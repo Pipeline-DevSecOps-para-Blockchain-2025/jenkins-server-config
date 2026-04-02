@@ -22,3 +22,11 @@ check_for_updates = false
 [rendering]
 server_url = http://renderer:8081/render
 callback_url = http://grafana:3000/grafana/
+
+[smtp]
+enabled = true
+host = smtp.sendgrid.net:587
+user = apikey
+from_address = {{ notification_sender }}
+from_name = Grafana DevSecOps
+startTLS_policy = MandatoryStartTLS

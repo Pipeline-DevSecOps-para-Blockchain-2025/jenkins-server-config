@@ -106,6 +106,12 @@ credentials:
               id: GitHub Personal Access Token
               scope: SYSTEM
               secret: '${GITHUB_PAT}'
+          - usernamePassword:
+              id: sendgrid-smtp
+              scope: GLOBAL
+              username: apikey
+              password: '${readFile:/secrets/jenkins/SENDGRID_API_KEY}'
+              description: SendGrid SMTP API Key
 
 jobs:
   {%- for job in jobs +%}
@@ -134,5 +140,18 @@ unclassified:
         signatureAlgorithm: SHA256
     hookUrl: '{{ 'https' if configure_tls else 'http' }}://{{ server_domain }}/github-webhook/'
   location:
-    adminAddress: '{{ admin_email }}'
+    adminAddress: '{{ notification_sender }}'
     url: '{{ 'https' if configure_tls else 'http' }}://{{ server_domain }}/'
+  email-ext:
+    defaultContentType: text/html
+    defaultRecipients: '{{ users.values() | map(attribute="email") | join(", ") }}'
+    mailAccount:
+      address: '{{ notification_sender }}'
+      credentialsId: sendgrid-smtp
+      smtpHost: smtp.sendgrid.net
+      smtpPort: 587
+      useTls: true
+  mailer:
+    replyToAddress: '{{ notification_sender }}'
+    smtpHost: smtp.sendgrid.net
+    smtpPort: '587'

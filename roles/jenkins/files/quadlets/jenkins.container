@@ -20,6 +20,7 @@ Secret=github-app-private-key,type=mount,target=/secrets/jenkins/GITHUB_APP_PRIV
 Secret=github-shared-secret,type=mount,target=/secrets/jenkins/GITHUB_SHARED_SECRET
 Secret=github-client-secret,type=mount,target=/secrets/jenkins/GITHUB_CLIENT_SECRET
 Secret=github-pat,type=mount,target=/secrets/jenkins/GITHUB_PAT
+Secret=sendgrid-api-key,type=mount,target=/secrets/jenkins/SENDGRID_API_KEY
 Environment=SECRETS=/secrets/jenkins
 
 [Service]

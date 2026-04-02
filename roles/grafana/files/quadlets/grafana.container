@@ -18,7 +18,9 @@ Volume=%E/grafana/provisioning:/etc/grafana/provisioning:ro,Z
 Volume=%E/grafana/dashboards:/var/lib/grafana/dashboards:ro,Z
 Environment=GF_PLUGINS_PREINSTALL_SYNC=victoriametrics-metrics-datasource
 Secret=grafana-admin-password,type=mount,target=/run/secrets/grafana-admin-password
+Secret=sendgrid-api-key,type=mount,target=/run/secrets/sendgrid-api-key
 Environment=GF_SECURITY_ADMIN_PASSWORD__FILE=/run/secrets/grafana-admin-password
+Environment=GF_SMTP_PASSWORD__FILE=/run/secrets/sendgrid-api-key
 
 [Service]
 Restart=always
