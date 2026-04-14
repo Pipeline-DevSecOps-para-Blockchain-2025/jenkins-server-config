@@ -3,6 +3,7 @@ audit-trail
 build-timeout
 configuration-as-code
 cloudbees-disk-usage-simple
+copyartifact
 dark-theme
 docker-plugin
 docker-workflow
