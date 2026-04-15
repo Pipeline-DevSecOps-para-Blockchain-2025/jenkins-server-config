@@ -45,3 +45,12 @@ See the [official documentation](https://cloudinit.readthedocs.io/en/latest/howt
 Checkout the [fedora.sh](./libvirt/fedora.sh) script. Requires at least 4 GiB of hugepages allocated.
 
 You might need to add `libvirt libvirt_guest` NSS modules to `/etc/nsswitch.conf`, see [Libvirt NSS module](https://libvirt.org/nss.html).
+
+After the VM finishes the first cloud-init bootstrap, the main follow-up commands are:
+
+```console
+$ ansible-playbook playbooks/devsecops-server.yaml -l devsecops-libvirt-server
+$ ansible-playbook playbooks/devsecops-server.yaml -l devsecops-libvirt-server --tags all -Kb
+```
+
+For the local libvirt VM, the `runner` sudo password is `runner`.
