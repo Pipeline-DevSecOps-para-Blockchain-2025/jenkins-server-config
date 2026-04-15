@@ -40,7 +40,7 @@ http {
     server {
         listen       80;
         listen       [::]:80;
-        server_name  {{ server_domain }};
+        server_name  {{ primary_domain }};
 
         # Allow ACME challenge through before redirecting.
         location ^~ /.well-known/acme-challenge/ {
@@ -56,11 +56,11 @@ http {
         listen       443 ssl;
         listen       [::]:443 ssl;
         http2        on;
-        server_name  {{ server_domain }};
+        server_name  {{ primary_domain }};
         root         /usr/share/nginx/html;
 
-        ssl_certificate     /etc/letsencrypt/live/{{ server_domain }}/fullchain.pem;
-        ssl_certificate_key /etc/letsencrypt/live/{{ server_domain }}/privkey.pem;
+        ssl_certificate     /etc/letsencrypt/live/{{ primary_domain }}/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/{{ primary_domain }}/privkey.pem;
 
         ssl_session_timeout 1d;
         ssl_session_cache   shared:SSL:10m;
@@ -69,11 +69,45 @@ http {
         # Load configuration files for the default server block.
         include /etc/nginx/default.d/*.conf;
     }
+{%- for alias in domain_aliases +%}
+
+    server {
+        listen       80;
+        listen       [::]:80;
+        server_name  {{ alias }};
+
+        location ^~ /.well-known/acme-challenge/ {
+            root /var/lib/letsencrypt;
+        }
+
+        location / {
+            return 301 https://{{ primary_domain }}$request_uri;
+        }
+    }
+
+    server {
+        listen       443 ssl;
+        listen       [::]:443 ssl;
+        http2        on;
+        server_name  {{ alias }};
+
+        ssl_certificate     /etc/letsencrypt/live/{{ primary_domain }}/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/{{ primary_domain }}/privkey.pem;
+
+        ssl_session_timeout 1d;
+        ssl_session_cache   shared:SSL:10m;
+        ssl_session_tickets off;
+
+        location / {
+            return 301 https://{{ primary_domain }}$request_uri;
+        }
+    }
+{%- endfor +%}
 {% else %}
     server {
         listen       80;
         listen       [::]:80;
-        server_name  {{ server_domain if configure_tls else '_' }};
+        server_name  {{ ([primary_domain] + domain_aliases) | join(' ') if configure_tls else '_' }};
         root         /usr/share/nginx/html;
 
         {% if configure_tls %}

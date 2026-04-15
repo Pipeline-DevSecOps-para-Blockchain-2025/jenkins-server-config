@@ -1,4 +1,5 @@
 configure_tls: true
-server_domain: _
+primary_domain: _
+domain_aliases: []
 jenkins_dind_agents: 6
 notification_sender: ci@devsecops-blockchain.dev

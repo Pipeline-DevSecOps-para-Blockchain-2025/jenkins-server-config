@@ -1,5 +1,5 @@
 [server]
-root_url = {{ 'https' if configure_tls else 'http' }}://{{ server_domain }}/grafana
+root_url = {{ 'https' if configure_tls else 'http' }}://{{ primary_domain }}/grafana
 serve_from_sub_path = true
 
 [security]

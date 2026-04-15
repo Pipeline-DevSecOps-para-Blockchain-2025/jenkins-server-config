@@ -17,10 +17,14 @@
     cmd: >-
       certbot certonly --webroot
         -w /var/lib/letsencrypt
-        -d '{{ server_domain }}'
+        --cert-name '{{ primary_domain }}'
+        -d '{{ primary_domain }}'
+        {%- for domain in domain_aliases +%}
+        -d '{{ domain }}'
+        {%- endfor +%}
         -m '{{ admin_email }}'
         --agree-tos -n
-    creates: '/etc/letsencrypt/live/{{ server_domain }}/fullchain.pem'
+    creates: '/etc/letsencrypt/live/{{ primary_domain }}/fullchain.pem'
 
 - name: Re-configure nginx with TLS after certificate obtained
   ansible.builtin.template:

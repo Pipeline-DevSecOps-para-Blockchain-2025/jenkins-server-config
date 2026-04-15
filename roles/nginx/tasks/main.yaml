@@ -11,7 +11,7 @@
 
 - name: Check if TLS certificate exists
   ansible.builtin.stat:
-    path: /etc/letsencrypt/live/{{ server_domain }}/fullchain.pem
+    path: /etc/letsencrypt/live/{{ primary_domain }}/fullchain.pem
   register: tls_cert
   when: configure_tls
 

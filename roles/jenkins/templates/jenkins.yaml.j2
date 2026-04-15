@@ -138,10 +138,10 @@ unclassified:
     hookSecretConfigs:
       - credentialsId: GitHub Shared Secret
         signatureAlgorithm: SHA256
-    hookUrl: '{{ 'https' if configure_tls else 'http' }}://{{ server_domain }}/github-webhook/'
+    hookUrl: '{{ 'https' if configure_tls else 'http' }}://{{ primary_domain }}/github-webhook/'
   location:
     adminAddress: '{{ notification_sender }}'
-    url: '{{ 'https' if configure_tls else 'http' }}://{{ server_domain }}/'
+    url: '{{ 'https' if configure_tls else 'http' }}://{{ primary_domain }}/'
   email-ext:
     defaultContentType: text/html
     defaultRecipients: '{{ users.values() | map(attribute="email") | join(", ") }}'
