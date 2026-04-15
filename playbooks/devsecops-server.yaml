@@ -1,5 +1,12 @@
 - name: Service deployment
   hosts: all
+  pre_tasks:
+    - name: Load vault secrets
+      ansible.builtin.include_vars:
+        file: '{{ inventory_dir }}/secret_vars/{{ inventory_hostname }}.yaml'
+      tags: [always]
+      when: '"bootstrap" not in ansible_run_tags'
+      no_log: true
   roles:
     - role: dnf
       when: '"fedora" in group_names'
