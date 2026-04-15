@@ -1,5 +1,7 @@
 [Unit]
 Description=Grafana
+Requires=grafana-renderer-token-generation.service
+After=grafana-renderer-token-generation.service
 Wants=victoriametrics.container renderer.container
 PropagatesStopTo=victoriametrics.container renderer.container
 
@@ -19,6 +21,7 @@ Volume=%E/grafana/dashboards:/var/lib/grafana/dashboards:ro,Z
 Environment=GF_PLUGINS_PREINSTALL_SYNC=victoriametrics-metrics-datasource
 Secret=grafana-admin-password,type=mount,target=/run/secrets/grafana-admin-password
 Secret=sendgrid-api-key,type=mount,target=/run/secrets/sendgrid-api-key
+Secret=grafana-renderer-token,type=env,target=GF_RENDERING_RENDERER_TOKEN
 Environment=GF_SECURITY_ADMIN_PASSWORD__FILE=/run/secrets/grafana-admin-password
 Environment=GF_SMTP_PASSWORD__FILE=/run/secrets/sendgrid-api-key
 

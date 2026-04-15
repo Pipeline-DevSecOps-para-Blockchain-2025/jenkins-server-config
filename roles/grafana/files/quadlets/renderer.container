@@ -1,5 +1,7 @@
 [Unit]
 Description=Grafana Image Renderer
+Requires=grafana-renderer-token-generation.service
+After=grafana-renderer-token-generation.service
 
 [Container]
 ContainerName=renderer
@@ -9,6 +11,7 @@ Network=services.network
 Image=docker.io/grafana/grafana-image-renderer:latest
 Pull=always
 Environment=ENABLE_METRICS=true
+Secret=grafana-renderer-token,type=env,target=AUTH_TOKEN
 
 [Service]
 Restart=always

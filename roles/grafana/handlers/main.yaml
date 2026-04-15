@@ -9,6 +9,17 @@
   become_method: su
   become_flags: -l
 
+- name: Restart Grafana Renderer token generation
+  ansible.builtin.systemd_service:
+    name: grafana-renderer-token-generation
+    scope: user
+    state: restarted
+    daemon_reload: true
+  become: '{{ ansible_facts["user_id"] != "runner" }}'
+  become_user: runner
+  become_method: su
+  become_flags: -l
+
 - name: Restart Grafana
   ansible.builtin.systemd_service:
     name: grafana

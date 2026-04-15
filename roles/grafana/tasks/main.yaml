@@ -71,6 +71,14 @@
 
 - name: Set up Grafana services
   block:
+    - name: Create user systemd directory
+      ansible.builtin.file:
+        path: /home/runner/.config/systemd/user
+        state: directory
+        owner: runner
+        group: runner
+        mode: '0700'
+
     - name: Create Grafana Podman secrets
       containers.podman.podman_secret:
         name: grafana-admin-password
@@ -96,6 +104,18 @@
         - grafana-data.volume
         - renderer.container
       notify: Restart Grafana
+
+    - name: Copy Grafana Renderer token generation service
+      ansible.builtin.copy:
+        src: systemd/grafana-renderer-token-generation.service
+        dest: /home/runner/.config/systemd/user/grafana-renderer-token-generation.service
+        owner: runner
+        group: runner
+        mode: '0600'
+      notify:
+        - Reload user systemd
+        - Restart Grafana Renderer token generation
+        - Restart Grafana
 
     - name: Copy VictoriaMetrics quadlets
       ansible.builtin.copy:

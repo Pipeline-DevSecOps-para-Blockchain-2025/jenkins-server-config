@@ -1,0 +1,7 @@
+[Unit]
+Description=Generate Grafana Renderer token secret
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/bash -euo pipefail -c 'printf %s "$(openssl rand -hex 32)" | podman secret create --replace grafana-renderer-token -'
+RemainAfterExit=yes
