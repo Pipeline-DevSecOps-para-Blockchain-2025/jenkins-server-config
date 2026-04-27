@@ -1,4 +1,5 @@
 # Pipeline DevSecOps para Smart Contracts - Infraestrutura
+[Clique aqui para ver a Wiki com Documentação completa da infraestrutura](https://github.com/Pipeline-DevSecOps-para-Blockchain-2025/devsecops-pipeline-blockchain/wiki/Documenta%C3%A7%C3%A3o-do-Jenkins-Server-Config)
 
 ## Configuração
 
